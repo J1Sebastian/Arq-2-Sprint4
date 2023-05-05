@@ -72,4 +72,19 @@ def crear_historia_clinica_view(request):
         historia_clinica_dto = hl.create_historia_clinica(json.loads(request.body))
         historia_clinica = serializers.serialize('json', [historia_clinica_dto,])
         return HttpResponse(historia_clinica, 'application/json')
+@csrf_exempt
+def home(request):
+    historias_clinicas = hl.get_historias_clinicas()
+    historias_clinicas = historias_clinicas.order_by('-id')[:10]
+    context = {
+        'historia_clinica_list': historias_clinicas
+    }
 
+    return render(request, 'historias_clinicas/historias_clinicas.html', context)
+
+def historia_clinica_edit_view(request, id):
+    historia_clinica = hl.get_historia_clinica(id)
+    context = {
+        'historia_clinica': historia_clinica
+    }
+    return render(request, 'historias_clinicas/historia_clinica_edit.html', context)

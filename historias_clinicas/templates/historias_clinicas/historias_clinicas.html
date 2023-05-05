@@ -27,20 +27,32 @@
                 <th>fecha_creacion</th>
                 <th>antecedentes</th>
                 <th>alergias</th>
+                <th>Editar</th>
               </tr>
             </thead>
             <tbody>
               {% for historia_clinica in historia_clinica_list %}
               <tr>
-                <td>{{ historia_clinica.medicamentos.name }}</td>
-                <td>{{ historia_clinica.procedimientos.name }}</td>
-                <td>{{ historia_clinica.diagnosticos.name }}</td>
-                <td>{{ historia_clinica.consultas.name }}</td>
-                <td>{{ historia_clinica.paciente.name }}</td>
+                <td>{{ historia_clinica.medicamentos.nombre }}</td>
+                <td>{{ historia_clinica.procedimientos.nombre }}</td>
+                <td>{{ historia_clinica.diagnosticos.nombre }}</td>
+                <td>{{ historia_clinica.consultas.fecha }}</td>
+                <td>{{ historia_clinica.paciente.nombre }}</td>
                 <td>{{ historia_clinica.codigo }}</td>
                 <td>{{ historia_clinica.fecha_creacion }}</td>
                 <td>{{ historia_clinica.antecedentes }}</td>
                 <td>{{ historia_clinica.alergias }}</td>
+                <td><button
+                  type="button"
+                  class="btn btn-primary waves-effect waves-light"
+                  onClick=" window.location.href='/' "
+                >
+                    <a href="/historias_clinicas/{{ historia_clinica.id }}/edit" style="text-decoration: n
+                    ; color: white;">
+                      Edit
+                    </a>
+                  </button>
+                </button></td>
               </tr>
               {% endfor %}
             </tbody>
@@ -52,7 +64,7 @@
               class="btn btn-primary waves-effect waves-light"
               onClick=" window.location.href='/' "
             >
-              Back
+              Create
             </button>
           </div>
         </div>

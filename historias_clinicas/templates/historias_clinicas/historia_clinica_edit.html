@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="content">
+  <div class="">
+    <div class="page-header-title">
+      <h4 class="page-title">Editar historia clinica de {{ historia_clinica.paciente }}</h4>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="page-content-wrapper">
+    <div class="container">
+      <!-- Content page -->
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form action="" method="post">
+            <div class="mb-3">
+              <label class="form-label" for="antecedentes">Antecedentes</label>
+                <input class="form-control" type="text" name="antecedentes" id="antecedentes" value="{{ historia_clinica.antecedentes }}">
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label" for="alergias">Alergias </label>
+                <input class="form-control" type="text" name="alergias" id="alergias" value="{{ historia_clinica.alergias }}">
+            </div>
+           
+          </form>
+
+          <div style="text-align: center">
+            <button
+              type="button"
+              class="btn btn-primary waves-effect waves-light"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

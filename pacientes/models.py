@@ -16,6 +16,6 @@ class Paciente(models.Model):
 
 
     def __str__(self) -> str:
-        return f"Paciente {self.nombre} ({self.documento})."
+        return f"Paciente {self.nombre} | ID: {self.documento}"
     
     
