@@ -3,24 +3,31 @@ import os
 import json
 
 key = Fernet.generate_key()
-print("La llave es: " + str(key))
+#print("La llave es: " + str(key))
 
 def encryptId(id, role, dateOfCreation, clinicHistoryId, key):
     textToEncrypt = id + ',' + role + ',' + dateOfCreation + ',' + clinicHistoryId
     cipher_suite = Fernet(key)
     ciphered_text = cipher_suite.encrypt(textToEncrypt.encode('utf-8'))
     if os.path.exists('monitoring\id.json'):
-        numLogs = 0
         with open('monitoring\id.json', 'r') as f:
             data = json.load(f)
-            numLogs = len(data)
         with open('monitoring\id.json', 'w') as f:
-            data[numLogs] = ciphered_text.decode('utf-8')
+            if clinicHistoryId in data:
+                listIds = list(data.get(clinicHistoryId))
+                listIds.append(ciphered_text.decode('utf-8'))
+                data[clinicHistoryId] = listIds
+            else:
+                listIds = []
+                listIds.append(ciphered_text.decode('utf-8'))
+                data[clinicHistoryId] = listIds
             json.dump(data, f)
     else:
         with open('monitoring\id.json', 'w') as f:
             data = {}
-            data[0] = ciphered_text.decode('utf-8')
+            listIds = []
+            listIds.append(ciphered_text.decode('utf-8'))
+            data[clinicHistoryId] = listIds
             json.dump(data, f)
     return ciphered_text
 
@@ -28,10 +35,12 @@ def decryptId(position, key):
     with open('monitoring\id.json', 'r') as f:
         data = json.load(f)
         cipher_suite = Fernet(key)
-        ciphered_text = data.get(position)
-        coded_text = ciphered_text.encode('utf-8')
-        unciphered_text = (cipher_suite.decrypt(coded_text)).decode('utf-8')
-        return unciphered_text
+        ciphered_list = data.get(position)
+        unciphered_list = []
+        for i in ciphered_list:
+            descifrado = cipher_suite.decrypt(i.encode('utf-8'))
+            unciphered_list.append(descifrado.decode('utf-8'))
+        return unciphered_list
 
 ciphered_text = encryptId('123456789', 'doctor', '2020-10-10', '11',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 #print(ciphered_text)
@@ -39,8 +48,10 @@ ciphered_text = encryptId('123456789', 'doctor', '2020-10-10', '11',  b'QeOzYI2X
 ciphered_text2 = encryptId('987654321', 'doctor', '2020-10-10', '12',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 #print(ciphered_text2)
 
-unciphered_text = decryptId('0',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
+unciphered_text = decryptId('11',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 print(unciphered_text)
 
-unciphered_text2 = decryptId('1',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
+unciphered_text2 = decryptId('12',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 print(unciphered_text2)
+
+# Falta: 1. Conectar con el POST de la API. 
