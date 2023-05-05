@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': "db",  # En las VM es db
         "USER": "divina",
         "PASSWORD": "isis2503",
-        "HOST": "localhost",  # IP privada de la base de datos
+        "HOST": "10.128.0.2",  # IP privada de la base de datos
         "PORT": "",  # En las VM: ""
     }
 }
