@@ -3,10 +3,11 @@ import os
 import json
 
 key = Fernet.generate_key()
-cipher_suite = Fernet(key)
+print("La llave es: " + str(key))
 
-def encryptId(id, role, dateOfCreation, clinicHistoryId):
+def encryptId(id, role, dateOfCreation, clinicHistoryId, key):
     textToEncrypt = id + ',' + role + ',' + dateOfCreation + ',' + clinicHistoryId
+    cipher_suite = Fernet(key)
     ciphered_text = cipher_suite.encrypt(textToEncrypt.encode('utf-8'))
     if os.path.exists('monitoring\id.json'):
         numLogs = 0
@@ -23,23 +24,23 @@ def encryptId(id, role, dateOfCreation, clinicHistoryId):
             json.dump(data, f)
     return ciphered_text
 
-def decryptId(position):
+def decryptId(position, key):
     with open('monitoring\id.json', 'r') as f:
         data = json.load(f)
+        cipher_suite = Fernet(key)
         ciphered_text = data.get(position)
-        # pasar a bytes en base 64, usando el import base64
         coded_text = ciphered_text.encode('utf-8')
         unciphered_text = (cipher_suite.decrypt(coded_text)).decode('utf-8')
         return unciphered_text
 
-#ciphered_text = encryptId('123456789', 'doctor', '2020-10-10', '11')
+ciphered_text = encryptId('123456789', 'doctor', '2020-10-10', '11',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 #print(ciphered_text)
 
-#ciphered_text2 = encryptId('987654321', 'doctor', '2020-10-10', '12')
+ciphered_text2 = encryptId('987654321', 'doctor', '2020-10-10', '12',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 #print(ciphered_text2)
 
-unciphered_text = decryptId('0')
+unciphered_text = decryptId('0',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 print(unciphered_text)
 
-unciphered_text2 = decryptId('1')
+unciphered_text2 = decryptId('1',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
 print(unciphered_text2)
