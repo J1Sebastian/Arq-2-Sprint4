@@ -9,6 +9,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 import json
+from .forms import VariableForm
+from django.contrib.auth.decorators import login_required
+from monitoring.auth0backend import getRole
 
 @csrf_exempt
 def historia_clinica_list(request):
@@ -82,9 +85,24 @@ def home(request):
 
     return render(request, 'historias_clinicas/historias_clinicas.html', context)
 
+@login_required
 def historia_clinica_edit_view(request, id):
-    historia_clinica = hl.get_historia_clinica(id)
-    context = {
-        'historia_clinica': historia_clinica
-    }
-    return render(request, 'historias_clinicas/historia_clinica_edit.html', context)
+    role = getRole(request)
+    if role == "medico":
+        if request.method == 'POST':
+            form = HistoriaClinicaForm(request.POST)
+            if form.is_valid():
+                historia_clinica = hl.update_historia_clinica(id, form.cleaned_data)
+                historia_clinica = hl.get_historia_clinica(id)
+                messages.success(request, 'Historia clinica editada correctamente')
+            else:
+                print(form.errors)
+        else:
+            form = HistoriaClinicaForm()
+
+        context = {
+            'historia_clinica': historia_clinica
+        }
+        return render(request, 'historias_clinicas/historia_clinica_edit.html', context)
+    else:
+        return HttpResponse("No tiene permisos para editar historias clinicas")

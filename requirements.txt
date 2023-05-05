@@ -1,3 +1,7 @@
 Django
 psycopg2-binary
 psycopg2
+cryptography
+PyJWT
+python-dotenv
+social-auth-app-django
