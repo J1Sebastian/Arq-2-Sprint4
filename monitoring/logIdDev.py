@@ -9,30 +9,16 @@ def encryptId(id, role, dateOfCreation, clinicHistoryId):
     textToEncrypt = str(id) + ',' + str(role) + ',' + str(dateOfCreation) + ',' + str(clinicHistoryId)
     cipher_suite = Fernet(b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
     ciphered_text = cipher_suite.encrypt(textToEncrypt.encode('utf-8'))
-    if os.path.exists('monitoring\id.json'):
-        with open('monitoring\id.json', 'r') as f:
-            data = json.load(f)
-        with open('monitoring\id.json', 'w') as f:
-            if clinicHistoryId in data:
-                listIds = list(data.get(clinicHistoryId))
-                listIds.append(ciphered_text.decode('utf-8'))
-                data[clinicHistoryId] = listIds
-            else:
-                listIds = []
-                listIds.append(ciphered_text.decode('utf-8'))
-                data[clinicHistoryId] = listIds
-            json.dump(data, f)
-    else:
-        with open('monitoring\id.json', 'w') as f:
-            data = {}
-            listIds = []
-            listIds.append(ciphered_text.decode('utf-8'))
-            data[clinicHistoryId] = listIds
-            json.dump(data, f)
+    with open('id.json', 'w') as f:
+        data = {}
+        listIds = []
+        listIds.append(ciphered_text.decode('utf-8'))
+        data[clinicHistoryId] = listIds
+        json.dump(data, f)
     return ciphered_text
 
 def decryptId(position, key):
-    with open('monitoring\id.json', 'r') as f:
+    with open('id.json', 'r') as f:
         data = json.load(f)
         cipher_suite = Fernet(key)
         ciphered_list = data.get(position)
