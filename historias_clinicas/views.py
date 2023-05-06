@@ -90,12 +90,11 @@ def home(request):
 def historia_clinica_edit_view(request, id):
     role = getRole(request)
     if role == "medico":
-        if request.method == 'POST':
-            form = HistoriaClinicaForm(request.POST)
+        if request.method == 'PUT':
+            form = HistoriaClinicaForm(request.PUT)
             if form.is_valid():
-                historia_clinica = form.save()
+                historia_clinica = hl.update_historia_clinica(id, form)
                 historia_clinica.save()
-                historia_clinica = hl.replace_historia_clinica(id, historia_clinica)
                 messages.success(request, 'Historia clinica editada correctamente')
                 return HttpResponseRedirect(reverse('home'))
             else:
