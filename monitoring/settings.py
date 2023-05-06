@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': "db",  # En las VM es db
         "USER": "divina",
         "PASSWORD": "isis2503",
-        "HOST": "localhost",  # IP privada de la base de datos
+        "HOST": "10.128.0.6",  # IP privada de la base de datos
         "PORT": "",  # En las VM: ""
     }
 }
@@ -156,3 +156,4 @@ SOCIAL_AUTH_AUTH0_KEY = 'Yv1aZUTFAXqG2MJo8RgflOzU0oSSyYCK'
 SOCIAL_AUTH_AUTH0_SECRET = 'fue-pI5xdn0Ayh8aQPkeNrwu_7sKRPXprPhJ5KBeG9DLDWOZVsm6-9ACmiZcx3b2' 
 SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile', 'email', 'role', ] 
 AUTHENTICATION_BACKENDS = { 'widmy.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
+
