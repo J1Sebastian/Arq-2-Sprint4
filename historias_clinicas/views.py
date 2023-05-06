@@ -114,9 +114,10 @@ def historia_clinica_create_view(request):
         if request.method == 'POST':
             form = HistoriaClinicaForm(request.POST)
             if form.is_valid():
+                print("form is valid")
                 historia_clinica = hl.create_historia_clinica(form.cleaned_data)
                 messages.success(request, 'Historia clinica creada correctamente')
-                return HttpResponseRedirect(reverse(''))
+                return HttpResponseRedirect(reverse('historia_clinica_create'))
             else:
                 print(form.errors)
         else:
