@@ -89,19 +89,20 @@ def home(request):
 def historia_clinica_edit_view(request, id):
     role = getRole(request)
     if role == "medico":
-        if request.method == 'POST':
-            form = HistoriaClinicaForm(request.POST)
+        if request.method == 'PUT':
+            form = HistoriaClinicaForm(request.PUT)
             if form.is_valid():
                 historia_clinica = hl.update_historia_clinica(id, form.cleaned_data)
                 historia_clinica = hl.get_historia_clinica(id)
                 messages.success(request, 'Historia clinica editada correctamente')
+                return HttpResponseRedirect(reverse('home'))
             else:
                 print(form.errors)
         else:
             form = HistoriaClinicaForm()
 
         context = {
-            'historia_clinica': form
+            'form': form
         }
         return render(request, 'historias_clinicas/historia_clinica_edit.html', context)
     else:
@@ -113,11 +114,8 @@ def historia_clinica_create_view(request):
     if role == "medico":
         if request.method == 'POST':
             form = HistoriaClinicaForm(request.POST)
-            print("form: ", form)
             if form.is_valid():
-                print("form is valid")
-                historia_clinica = form.save()
-                historia_clinica.save()
+                historia_clinica = hl.create_historia_clinica(form.cleaned_data)
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('home'))
             else:
