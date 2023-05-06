@@ -119,7 +119,7 @@ def historia_clinica_create_view(request):
                 historia_clinica = form.save()
                 historia_clinica.save()
                 messages.success(request, 'Historia clinica creada correctamente')
-                return HttpResponseRedirect(reverse('historias_clinicas:historia_clinica_list'))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 print(form.errors)
         else:
