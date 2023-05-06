@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': "db",  # En las VM es db
         "USER": "divina",
         "PASSWORD": "isis2503",
-        "HOST": "10.128.0.2",  # IP privada de la base de datos
+        "HOST": "localhost",  # IP privada de la base de datos
         "PORT": "",  # En las VM: ""
     }
 }
@@ -149,8 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "/login/auth0" 
 LOGIN_REDIRECT_URL = "/" 
-LOGOUT_REDIRECT_URL = "https://widmy-lasdivinas.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F10.128.0.2:8080"
-
+LOGOUT_REDIRECT_URL = "https://widmy-lasdivinas.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F34.170.243.63:8080"
 SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes 
 SOCIAL_AUTH_AUTH0_DOMAIN = 'widmy-lasdivinas.us.auth0.com' 
 SOCIAL_AUTH_AUTH0_KEY = 'Yv1aZUTFAXqG2MJo8RgflOzU0oSSyYCK' 
