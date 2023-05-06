@@ -90,8 +90,8 @@ def home(request):
 def historia_clinica_edit_view(request, id):
     role = getRole(request)
     if role == "medico":
-        if request.method == 'PUT':
-            form = HistoriaClinicaForm(request.PUT)
+        if request.method == 'POST':
+            form = HistoriaClinicaForm(request.POST)
             if form.is_valid():
                 historia_clinica = form.save()
                 historia_clinica.save()
