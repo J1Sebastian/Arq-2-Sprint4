@@ -119,7 +119,7 @@ def historia_clinica_create_view(request):
                 historia_clinica = form.save()
                 historia_clinica.save()
                 messages.success(request, 'Historia clinica creada correctamente')
-                return render(request, 'historias_clinicas/historias_clinicas.html')
+                return render(request, '')
             else:
                 print(form.errors)
         else:
@@ -128,6 +128,6 @@ def historia_clinica_create_view(request):
         context = {
             'form': form
         }
-        return render(request, 'historias_clinicas/historias_clinicas.html', context)
+        return render(request, 'historias_clinicas/historia_clinica_create.html', context)
     else:
         return HttpResponse("No tiene permisos para crear historias clinicas")
