@@ -12,7 +12,7 @@ from django.shortcuts import render
 import json
 from .forms import HistoriaClinicaForm
 from django.contrib.auth.decorators import login_required
-from monitoring.auth0backend import getRole
+from monitoring.auth0backend import getRole, getUserId
 
 @csrf_exempt
 def historia_clinica_list(request):
@@ -118,7 +118,7 @@ def historia_clinica_create_view(request):
             if form.is_valid():
                 historia_clinica = form.save()
                 historia_clinica.save()
-                encryptId('1', getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
+                encryptId(getUserId(request), getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('home'))
             else:
