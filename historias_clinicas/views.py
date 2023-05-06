@@ -116,7 +116,8 @@ def historia_clinica_create_view(request):
             print("form: ", form)
             if form.is_valid():
                 print("form is valid")
-                historia_clinica = hl.create_historia_clinica(form.cleaned_data)
+                historia_clinica = form.save()
+                historia_clinica.save()
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('historia_clinica_create'))
             else:
