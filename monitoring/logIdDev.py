@@ -5,9 +5,9 @@ import json
 key = Fernet.generate_key()
 #print("La llave es: " + str(key))
 
-def encryptId(id, role, dateOfCreation, clinicHistoryId, key):
+def encryptId(id, role, dateOfCreation, clinicHistoryId):
     textToEncrypt = id + ',' + role + ',' + dateOfCreation + ',' + clinicHistoryId
-    cipher_suite = Fernet(key)
+    cipher_suite = Fernet(b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
     ciphered_text = cipher_suite.encrypt(textToEncrypt.encode('utf-8'))
     if os.path.exists('monitoring\id.json'):
         with open('monitoring\id.json', 'r') as f:
