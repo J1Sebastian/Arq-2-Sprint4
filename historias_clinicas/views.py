@@ -119,7 +119,7 @@ def historia_clinica_create_view(request):
                 historia_clinica = form.save()
                 historia_clinica.save()
                 messages.success(request, 'Historia clinica creada correctamente')
-                return render(request, 'historias_clinicas.html')
+                return render(request, 'historias_clinicas/historias_clinicas.html')
             else:
                 print(form.errors)
         else:
