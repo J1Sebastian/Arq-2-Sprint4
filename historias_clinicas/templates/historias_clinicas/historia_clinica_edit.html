@@ -3,7 +3,7 @@
 <div class="content">
   <div class="">
     <div class="page-header-title">
-      <h4 class="page-title">Editar historia clinica de {{ historia_clinica.paciente }}</h4>
+      <h4 class="page-title">Editar historia clinica de {{ form.paciente }}</h4>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
 
       <div class="panel panel-default">
         <div class="panel-body">
-          <form action="" method="POST">
+          <form action="" method="PUT">
             {% csrf_token %}
             <br>
             {{ form.as_p }} 
