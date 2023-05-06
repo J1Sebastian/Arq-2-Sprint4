@@ -2,15 +2,13 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 from historias_clinicas.forms import HistoriaClinicaForm
+from monitoring.logIdDev import encryptId
 from .logic import logic_historia_clinica as hl
 from django.http import HttpResponse
 from django.core import serializers
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-
-from monitoring.logIdDev import encryptId
-
 import json
 from .forms import HistoriaClinicaForm
 from django.contrib.auth.decorators import login_required
@@ -118,7 +116,8 @@ def historia_clinica_create_view(request):
         if request.method == 'POST':
             form = HistoriaClinicaForm(request.POST)
             if form.is_valid():
-                historia_clinica = hl.create_historia_clinica(form.cleaned_data)
+                historia_clinica = form.save()
+                historia_clinica.save()
                 encryptId(1, getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('home'))
