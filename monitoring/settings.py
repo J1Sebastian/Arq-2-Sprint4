@@ -155,5 +155,5 @@ SOCIAL_AUTH_AUTH0_DOMAIN = 'widmy-lasdivinas.us.auth0.com'
 SOCIAL_AUTH_AUTH0_KEY = 'Yv1aZUTFAXqG2MJo8RgflOzU0oSSyYCK' 
 SOCIAL_AUTH_AUTH0_SECRET = 'fue-pI5xdn0Ayh8aQPkeNrwu_7sKRPXprPhJ5KBeG9DLDWOZVsm6-9ACmiZcx3b2' 
 SOCIAL_AUTH_AUTH0_SCOPE = [ 'openid', 'profile', 'email', 'role', ] 
-AUTHENTICATION_BACKENDS = { 'monitoring.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
+AUTHENTICATION_BACKENDS = { 'autenticador.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
 
