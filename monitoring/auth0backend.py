@@ -49,5 +49,5 @@ def getUserId(request):
     headers = {'authorization': 'Bearer ' + accessToken}
     resp = requests.get(url, headers=headers)
     userinfo = resp.json()
-    user_id = userinfo['widmy-lasdivinas.us.auth0.com/user_id']
+    user_id = userinfo['sub'].split('|')[1]
     return (user_id)
