@@ -8,6 +8,9 @@ from django.core import serializers
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
+
+from monitoring.logIdDev import encryptId
+
 import json
 from .forms import HistoriaClinicaForm
 from django.contrib.auth.decorators import login_required
@@ -116,6 +119,7 @@ def historia_clinica_create_view(request):
             form = HistoriaClinicaForm(request.POST)
             if form.is_valid():
                 historia_clinica = hl.create_historia_clinica(form.cleaned_data)
+                encryptId(1, getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('home'))
             else:
