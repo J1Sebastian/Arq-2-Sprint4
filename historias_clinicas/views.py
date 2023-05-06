@@ -101,7 +101,7 @@ def historia_clinica_edit_view(request, id):
             form = HistoriaClinicaForm()
 
         context = {
-            'historia_clinica': historia_clinica
+            'historia_clinica': form
         }
         return render(request, 'historias_clinicas/historia_clinica_edit.html', context)
     else:
