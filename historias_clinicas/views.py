@@ -126,7 +126,7 @@ def historia_clinica_create_view(request):
             form = HistoriaClinicaForm()
 
         context = {
-            'historia_clinica': form
+            'form': form
         }
         return render(request, 'historias_clinicas/historia_clinica_create.html', context)
     else:
