@@ -2,7 +2,7 @@ from cryptography.fernet import Fernet
 import os
 import json
 
-key = Fernet.generate_key()
+key = Fernet.generate_key() 
 #print("La llave es: " + str(key))
 
 def encryptId(id, role, dateOfCreation, clinicHistoryId):
@@ -28,16 +28,9 @@ def decryptId(position, key):
             unciphered_list.append(descifrado.decode('utf-8'))
         return unciphered_list
 
-#ciphered_text = encryptId('123456789', 'doctor', '2020-10-10', '11')
-#print(ciphered_text)
-
-#ciphered_text2 = encryptId('987654321', 'doctor', '2020-10-10', '12')
-#print(ciphered_text2)
-
-#unciphered_text = decryptId('11',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
-#print(unciphered_text)
-
-#unciphered_text2 = decryptId('12',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
-#print(unciphered_text2)
-
-# Falta: 1. Conectar con el POST de la API. 
+def decryptId2(mensaje, key):
+    cipher_suite = Fernet(key)
+    unciphered_text = (cipher_suite.decrypt(mensaje))
+    return cipher_suite.decrypt(mensaje.encode('utf-8'))
+ 
+print(decryptId2('gAAAAABkVeKBLEbPXdNaadx6yTwP0_09CCobTxm8DOtj2JgFNAXxhESrbDz8H5196gvIy3Foix763DD0g1ncJFIblWDPcvHCzN7MDatLei3ZHTBV6wOR_a3yUupFzsOBNDJZSFe7et_1', b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw='))
