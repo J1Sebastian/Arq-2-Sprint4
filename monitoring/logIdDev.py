@@ -48,10 +48,10 @@ def decryptId(position, key):
 #ciphered_text2 = encryptId('987654321', 'doctor', '2020-10-10', '12')
 #print(ciphered_text2)
 
-unciphered_text = decryptId('11',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
-print(unciphered_text)
+#unciphered_text = decryptId('11',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
+#print(unciphered_text)
 
-unciphered_text2 = decryptId('12',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
-print(unciphered_text2)
+#unciphered_text2 = decryptId('12',  b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
+#print(unciphered_text2)
 
 # Falta: 1. Conectar con el POST de la API. 
