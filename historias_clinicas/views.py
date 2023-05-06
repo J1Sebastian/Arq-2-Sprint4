@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 from historias_clinicas.forms import HistoriaClinicaForm
-from monitoring.logIdDev import encryptId
+from registrador_logs.logIdDev import encryptId
 from .logic import logic_historia_clinica as hl
 from django.http import HttpResponse
 from django.core import serializers
@@ -12,7 +12,7 @@ from django.shortcuts import render
 import json
 from .forms import HistoriaClinicaForm
 from django.contrib.auth.decorators import login_required
-from monitoring.auth0backend import getRole, getUserId
+from autenticador.auth0backend import getRole, getUserId
 
 @csrf_exempt
 def historia_clinica_list(request):
