@@ -118,7 +118,7 @@ def historia_clinica_create_view(request):
             if form.is_valid():
                 historia_clinica = form.save()
                 historia_clinica.save()
-                encryptId(1, getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
+                encryptId('1', getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('home'))
             else:
