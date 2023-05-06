@@ -113,6 +113,7 @@ def historia_clinica_create_view(request):
     if role == "medico":
         if request.method == 'POST':
             form = HistoriaClinicaForm(request.POST)
+            print("form: ", form)
             if form.is_valid():
                 print("form is valid")
                 historia_clinica = hl.create_historia_clinica(form.cleaned_data)
