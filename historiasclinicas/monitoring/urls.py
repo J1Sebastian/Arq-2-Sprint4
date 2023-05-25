@@ -17,23 +17,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-import views
 
 urlpatterns = [
     path('', include('historiasclinicas.urls')),
     path('admin/', admin.site.urls),
-    path('usuarios/', include('usuarios.urls')),
-    path('eps/', include('eps.urls')),
-    path('pacientes/', include('pacientes.urls')),
-    path('ips/', include('ips.urls')),
+    # path('usuarios/', include('usuarios.urls')),
+    # path('eps/', include('eps.urls')),
+    # path('pacientes/', include('pacientes.urls')),
+    # path('ips/', include('ips.urls')),
     path('historiasclinicas/', include('historiasclinicas.urls')),
-    path('afiliacion/', include('afiliacion.urls')),
-    path('medicamentos/', include('medicamentos.urls')),
-    path('procedimientos/', include('procedimientos.urls')),
-    path('diagnosticos/', include('diagnosticos.urls')),
-    path('consultas/', include('consultas.urls')),
-    path('medicos/', include('medicos.urls')),
-    path('health-check/', views.health_check),
+    # path('afiliacion/', include('afiliacion.urls')),
+    # path('medicamentos/', include('medicamentos.urls')),
+    # path('procedimientos/', include('procedimientos.urls')),
+    # path('diagnosticos/', include('diagnosticos.urls')),
+    # path('consultas/', include('consultas.urls')),
+    # path('medicos/', include('medicos.urls')),
     path(r'', include('django.contrib.auth.urls')),
     path(r'', include('social_django.urls')),
 ]
