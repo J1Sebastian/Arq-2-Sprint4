@@ -8,13 +8,19 @@ from pacientes.models import Paciente
 
 
 class HistoriaClinica(models.Model):
-    medicamentos = models.ForeignKey(Medicamento, on_delete=models.CASCADE, null=True)
-    procedimientos = models.ForeignKey(
-        Procedimiento, on_delete=models.CASCADE, null=True
-    )
-    diagnosticos = models.ForeignKey(Diagnostico, on_delete=models.CASCADE, null=True)
-    consultas = models.ForeignKey(Consulta, on_delete=models.CASCADE, null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, null=True)
+    # medicamentos = models.ForeignKey(Medicamento, on_delete=models.CASCADE, null=True)
+    # procedimientos = models.ForeignKey(
+    #     Procedimiento, on_delete=models.CASCADE, null=True
+    # )
+    # diagnosticos = models.ForeignKey(Diagnostico, on_delete=models.CASCADE, null=True)
+    # consultas = models.ForeignKey(Consulta, on_delete=models.CASCADE, null=True)
+    # paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, null=True)
+
+    medicamentos = models.CharField(max_length=50)
+    procedimientos = models.CharField(max_length=50)
+    diagnosticos = models.CharField(max_length=50)
+    consultas = models.CharField(max_length=50)
+    paciente = models.CharField(max_length=50)
 
     codigo = models.CharField(max_length=50, default="0")
     fecha_creacion = models.DateField(auto_now_add=True)
