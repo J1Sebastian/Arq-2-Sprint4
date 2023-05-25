@@ -48,7 +48,7 @@ def paciente_view(request, pk):
 
 def PacienteList(request):
     queryset = Paciente.objects.all()
-    context = list(queryset.values('id', 'name'))
+    context = list(queryset.values('id', 'nombre', 'documento'))
     return JsonResponse(context, safe=False)
 
 def PacienteCreate(request):
