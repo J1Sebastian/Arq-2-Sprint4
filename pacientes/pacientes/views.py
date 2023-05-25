@@ -5,7 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 from . import logic as lp
 from django.http import HttpResponse
 from django.core import serializers
+from django.http import JsonResponse
+
 import json
+
+from .models import Paciente
 
 @csrf_exempt
 def pacientes_view(request):
@@ -41,4 +45,23 @@ def paciente_view(request, pk):
         lp.delete_paciente(pk)
         return HttpResponse(status=204)
 
-    
+
+def PacienteList(request):
+    queryset = Paciente.objects.all()
+    context = list(queryset.values('id', 'nombre', 'documento'))
+    return JsonResponse(context, safe=False)
+
+def PacienteCreate(request):
+    if request.method == 'POST':
+        data = request.body.decode('utf-8')
+        data_json = json.loads(data)
+        paciente = Paciente()
+        paciente.nombre = data_json["nombre"]
+        paciente.documento = data_json["documento"]
+        paciente.prioridad = data_json["prioridad"]
+        paciente.fecha_nacimiento = data_json["fecha_nacimiento"]
+        paciente.peso = data_json["peso"]
+        paciente.altura = data_json["altura"]
+        paciente.tipo_sangre = data_json["tipo_sangre"]
+        paciente.save()
+        return HttpResponse("successfully created variable")
