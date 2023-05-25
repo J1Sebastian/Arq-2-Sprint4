@@ -158,6 +158,6 @@ AUTHENTICATION_BACKENDS = { 'autenticador.auth0backend.Auth0', 'django.contrib.a
 
 # Microservices: TODO
 
-PATH_PACIENTES = "http://IP_PRIVADA_MS:8080/pacientes"
+PATH_PACIENTES = "http://10.128.0.5:8080/pacientes"
 PATH_EPS = "http://IP_PRIVADA_MS:8080/epss"
 PATH_USUARIOS = "http://IP_PRIVADA_MS:8080/usuarios"
