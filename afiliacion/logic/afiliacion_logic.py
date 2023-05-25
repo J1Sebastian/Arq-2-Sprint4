@@ -1,5 +1,5 @@
 from eps.models import Eps
-from pacientes.models import Paciente
+from pacientes.pacientes.models import Paciente
 from ..models import Afiliacion
 
 def get_afiliaciones():

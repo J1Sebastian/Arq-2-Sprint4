@@ -1,5 +1,5 @@
 from django.db import models
-from pacientes.models import Paciente
+from pacientes.pacientes.models import Paciente
 
 publica: str = "PUBLICA"
 privada: str = "PRIVADA"
