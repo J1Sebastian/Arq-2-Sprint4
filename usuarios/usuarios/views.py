@@ -7,6 +7,10 @@ from django.http import HttpResponse
 from django.core import serializers
 import json
 
+from django.http import JsonResponse
+
+from .models import Usuario
+
 @csrf_exempt
 def usuarios_view(request):
     if request.method == 'GET':
@@ -40,3 +44,20 @@ def usuario_view(request, pk):
     if request.method == 'DELETE':
         la.delete_usuario(pk)
         return HttpResponse(status=204)
+    
+
+def UsuarioList(request):
+    queryset = Usuario.objects.all()
+    context = list(queryset.values('id', 'nombre', 'documento', 'perfil'))
+    return JsonResponse(context, safe=False)
+
+def UsuarioCreate(request):
+    if request.method == 'POST':
+        data = request.body.decode('utf-8')
+        data_json = json.loads(data)
+        usuario = Usuario()
+        usuario.nombre = data_json['nombre']
+        usuario.documento = data_json['documento']
+        usuario.perfil = data_json['perfil']
+        usuario.save()
+        return HttpResponse("successfully created usuario")

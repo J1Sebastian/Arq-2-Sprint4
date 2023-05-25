@@ -64,4 +64,4 @@ def PacienteCreate(request):
         paciente.altura = data_json["altura"]
         paciente.tipo_sangre = data_json["tipo_sangre"]
         paciente.save()
-        return HttpResponse("successfully created variable")
+        return HttpResponse("successfully created paciente")
