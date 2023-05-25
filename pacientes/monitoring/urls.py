@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('usuarios/', include('usuarios.urls')),
     # path('eps/', include('eps.urls')),
-    path('pacientes/', include('pacientes.urls')),
+    path('', include('pacientes.urls')),
     # path('ips/', include('ips.urls')),
     # path('historiasclinicas/', include('historiasclinicas.urls')),
     # path('afiliacion/', include('afiliacion.urls')),

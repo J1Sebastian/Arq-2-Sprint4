@@ -7,6 +7,7 @@ from .logic import logic_historia_clinica as hl
 from django.http import HttpResponse
 from django.core import serializers
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from django.urls import reverse
 from django.shortcuts import render
 import json
@@ -88,10 +89,21 @@ def home(request):
     }
     return render(request, 'historiasclinicas.html', context)
 
-@login_required
+# With view
+
+def check_paciente(data):
+    r = requests.get(settings.PATH_PACIENTES, headers={"Accept":"application/json"})
+    pacientes = r.json()
+    for paciente in pacientes:
+        if data["paciente"] == paciente["id"]:
+            return True
+    return False
+
+
+# @login_required
 def historiaclinica_edit_view(request, id):
-    role = getRole(request)
-    if role == "medico":
+    # role = getRole(request)
+    # if role == "medico":
         if request.method == 'PUT':
             form = HistoriaClinicaForm(request.PUT)
             if form.is_valid():
@@ -108,29 +120,33 @@ def historiaclinica_edit_view(request, id):
             'form': form
         }
         return render(request, 'historiaclinica_edit.html', context)
-    else:
-        return HttpResponse("No tiene permisos para editar historias clinicas")
+    # else:
+    #     return HttpResponse("No tiene permisos para editar historias clinicas")
     
-@login_required
+# @login_required
 def historiaclinica_create_view(request):
-    role = getRole(request)
-    if role == "medico":
+    # Authentication
+    # role = getRole(request)
+    # if role == "medico":
+
         if request.method == 'POST':
             form = HistoriaClinicaForm(request.POST)
             if form.is_valid():
                 historia_clinica = form.save()
                 historia_clinica.save()
+
+                # Log
                 encryptId(getUserId(request), getRole(request), historia_clinica.fecha_creacion, historia_clinica.codigo)
+                
                 messages.success(request, 'Historia clinica creada correctamente')
                 return HttpResponseRedirect(reverse('home'))
             else:
                 print(form.errors)
         else:
             form = HistoriaClinicaForm()
-
         context = {
             'form': form
         }
         return render(request, 'historiaclinica_create.html', context)
-    else:
-        return HttpResponse("No tiene permisos para crear historias clinicas")
+    # else:
+    #     return HttpResponse("No tiene permisos para crear historias clinicas")
