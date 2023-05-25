@@ -1,9 +1,11 @@
 from django.urls import path
+from django.conf.urls import url, include
+from django.views.decorators.csrf import csrf_exempt
 
 from . import views
 
 urlpatterns = [
-    path('', views.pacientes_view, name='pacientes_view'),
-    path('<int:pk>', views.paciente_view, name='paciente_view'),
+    url(r'^pacientes/', views.VariableList, name='variableList'),
+    url(r'^pacientescreate/$', csrf_exempt(views.VariableCreate), name='variableCreate'),
 ]
     
