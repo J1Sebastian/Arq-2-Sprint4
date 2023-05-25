@@ -1,10 +1,10 @@
 from django.db import models
 
-from medicamentos.models import Medicamento
-from procedimientos.models import Procedimiento
-from diagnosticos.models import Diagnostico
-from consultas.models import Consulta
-from pacientes.models import Paciente
+# from medicamentos.models import Medicamento
+# from procedimientos.models import Procedimiento
+# from diagnosticos.models import Diagnostico
+# from consultas.models import Consulta
+# from pacientes.models import Paciente
 
 
 class HistoriaClinica(models.Model):
