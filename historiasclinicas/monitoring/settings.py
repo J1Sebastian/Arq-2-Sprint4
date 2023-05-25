@@ -59,6 +59,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
            os.path.join(BASE_DIR, 'historiasclinicas','templates'),
+           os.path.join(BASE_DIR, 'historiasclinicas', 'templates', 'historiasclinicas')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
