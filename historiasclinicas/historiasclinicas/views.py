@@ -59,7 +59,7 @@ def historia_clinica_view(request, pk):
         return HttpResponse(status=204)
 
 @csrf_exempt
-def historia_clinica_create(request):
+def historiaclinica_create(request):
     if request.method == 'POST':
         historia_clinica_dto = hl.create_historia_clinica_json(json.loads(request.body))
         historia_clinica = serializers.serialize('json', [historia_clinica_dto,])
@@ -78,6 +78,7 @@ def crear_historia_clinica_view(request):
         historia_clinica_dto = hl.create_historia_clinica(json.loads(request.body))
         historia_clinica = serializers.serialize('json', [historia_clinica_dto,])
         return HttpResponse(historia_clinica, 'application/json')
+
 @csrf_exempt
 def home(request):
     historiasclinicas = hl.get_historiasclinicas()
@@ -85,11 +86,10 @@ def home(request):
     context = {
         'historia_clinica_list': historiasclinicas
     }
-
     return render(request, 'historiasclinicas/historiasclinicas.html', context)
 
 @login_required
-def historia_clinica_edit_view(request, id):
+def historiaclinica_edit_view(request, id):
     role = getRole(request)
     if role == "medico":
         if request.method == 'PUT':
@@ -107,12 +107,12 @@ def historia_clinica_edit_view(request, id):
         context = {
             'form': form
         }
-        return render(request, 'historiasclinicas/historia_clinica_edit.html', context)
+        return render(request, 'historiasclinicas/historiaclinica_edit.html', context)
     else:
         return HttpResponse("No tiene permisos para editar historias clinicas")
     
 @login_required
-def historia_clinica_create_view(request):
+def historiaclinica_create_view(request):
     role = getRole(request)
     if role == "medico":
         if request.method == 'POST':
@@ -131,6 +131,6 @@ def historia_clinica_create_view(request):
         context = {
             'form': form
         }
-        return render(request, 'historiasclinicas/historia_clinica_create.html', context)
+        return render(request, 'historiasclinicas/historiaclinica_create.html', context)
     else:
         return HttpResponse("No tiene permisos para crear historias clinicas")
