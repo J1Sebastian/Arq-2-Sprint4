@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .historiasclinicas import models
+import models
 
 
 class HistoriaClinicaSerializer(serializers.ModelSerializer):
