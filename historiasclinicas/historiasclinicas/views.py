@@ -22,7 +22,7 @@ def historia_clinica_list(request):
     context = {
         'historia_clinica_list': historiasclinicas
     }
-    return render(request, 'historiasclinicas/historiasclinicas.html', context)
+    return render(request, 'templates/historiasclinicas/historiasclinicas.html', context)
 
 @csrf_exempt
 def historiasclinicas_view(request):
@@ -86,7 +86,7 @@ def home(request):
     context = {
         'historia_clinica_list': historiasclinicas
     }
-    return render(request, 'historiasclinicas/historiasclinicas.html', context)
+    return render(request, 'templates/historiasclinicas/historiasclinicas.html', context)
 
 @login_required
 def historiaclinica_edit_view(request, id):
@@ -107,7 +107,7 @@ def historiaclinica_edit_view(request, id):
         context = {
             'form': form
         }
-        return render(request, 'historiasclinicas/historiaclinica_edit.html', context)
+        return render(request, 'templates/historiasclinicas/historiaclinica_edit.html', context)
     else:
         return HttpResponse("No tiene permisos para editar historias clinicas")
     
@@ -131,6 +131,6 @@ def historiaclinica_create_view(request):
         context = {
             'form': form
         }
-        return render(request, 'historiasclinicas/historiaclinica_create.html', context)
+        return render(request, 'templates/historiasclinicas/historiaclinica_create.html', context)
     else:
         return HttpResponse("No tiene permisos para crear historias clinicas")
