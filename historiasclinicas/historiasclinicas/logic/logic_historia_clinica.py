@@ -1,9 +1,9 @@
-from medicamentos.logic.logic_medicamentos import get_medicamento
-from diagnosticos.logic.logic_diagnostico import get_diagnostico
-from consultas.logic.logic_consulta import get_consulta
-from pacientes.logic.logic_paciente import get_paciente
-from procedimientos.logic.logic_procedimiento import get_procedimiento, get_procedimientos
-from ..historiasclinicas.models import HistoriaClinica
+# from medicamentos.logic.logic_medicamentos import get_medicamento
+# from diagnosticos.logic.logic_diagnostico import get_diagnostico
+# from consultas.logic.logic_consulta import get_consulta
+# from pacientes.logic.logic_paciente import get_paciente
+# from procedimientos.logic.logic_procedimiento import get_procedimiento, get_procedimientos
+from ..models import HistoriaClinica
 
 def get_historiasclinicas():
     queryset = HistoriaClinica.objects.all()
@@ -29,11 +29,11 @@ def create_historia_clinica_json(historia_clinica_json: dict):
         fecha_creacion = historia_clinica_json['fecha_creacion'],
         antecedentes = historia_clinica_json['antecedentes'],
         alergias = historia_clinica_json['alergias'],
-        medicamentos = get_medicamento(historia_clinica_json['medicamentos']),
-        procedimientos = get_procedimiento(historia_clinica_json['procedimientos']),
-        diagnosticos = get_diagnostico(historia_clinica_json['diagnosticos']),
-        consultas = get_consulta(historia_clinica_json['consultas']),
-        paciente = get_paciente(historia_clinica_json['paciente']),
+        # medicamentos = get_medicamento(historia_clinica_json['medicamentos']),
+        # procedimientos = get_procedimiento(historia_clinica_json['procedimientos']),
+        # diagnosticos = get_diagnostico(historia_clinica_json['diagnosticos']),
+        # consultas = get_consulta(historia_clinica_json['consultas']),
+        # paciente = get_paciente(historia_clinica_json['paciente']),
     )
     historia_clinica.save()
     return historia_clinica
@@ -41,11 +41,11 @@ def create_historia_clinica_json(historia_clinica_json: dict):
 
 def update_historia_clinica_json(pk, historia_clinica_json: dict):
     historia_clinica = get_historia_clinica(pk)
-    historia_clinica_json['procedimientos'] = get_procedimiento(historia_clinica_json['procedimientos'])
-    historia_clinica_json['medicamentos'] = get_medicamento(historia_clinica_json['medicamentos'])
-    historia_clinica_json['diagnosticos'] = get_diagnostico(historia_clinica_json['diagnosticos'])
-    historia_clinica_json['consultas'] = get_consulta(historia_clinica_json['consultas'])
-    historia_clinica_json['paciente'] = get_paciente(historia_clinica_json['paciente'])
+    # historia_clinica_json['procedimientos'] = get_procedimiento(historia_clinica_json['procedimientos'])
+    # historia_clinica_json['medicamentos'] = get_medicamento(historia_clinica_json['medicamentos'])
+    # historia_clinica_json['diagnosticos'] = get_diagnostico(historia_clinica_json['diagnosticos'])
+    # historia_clinica_json['consultas'] = get_consulta(historia_clinica_json['consultas'])
+    # historia_clinica_json['paciente'] = get_paciente(historia_clinica_json['paciente'])
     replace_historia_clinica(pk, historia_clinica_json)
     historia_clinica.save()
     return historia_clinica
