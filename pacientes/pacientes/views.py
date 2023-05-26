@@ -47,8 +47,8 @@ def paciente_view(request, pk):
 
 
 def PacienteList(request):
-    queryset = Paciente.objects.all()
-    context = list(queryset.values('id', 'nombre', 'documento', 'prioridad', 'fecha_nacimiento', 'peso', 'altura', 'tipo_sangre'))
+    #queryset = Paciente.objects.all()
+    #context = list(queryset.values('id', 'nombre', 'documento', 'prioridad', 'fecha_nacimiento', 'peso', 'altura', 'tipo_sangre'))
 
     queryset = Paciente.objects.all()
     pacientes = queryset.order_by('-id')[:10]

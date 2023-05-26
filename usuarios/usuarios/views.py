@@ -47,9 +47,17 @@ def usuario_view(request, pk):
     
 
 def UsuarioList(request):
+    #queryset = Usuario.objects.all()
+    #context = list(queryset.values('id', 'nombre', 'documento', 'perfil'))
+
     queryset = Usuario.objects.all()
-    context = list(queryset.values('id', 'nombre', 'documento', 'perfil'))
-    return JsonResponse(context, safe=False)
+    usuarios = queryset.order_by('-id')[:10]
+
+    context = {
+        'usuarios_list': usuarios
+    }
+
+    return render(request, 'usuarios.html', context)
 
 def UsuarioCreate(request):
     if request.method == 'POST':

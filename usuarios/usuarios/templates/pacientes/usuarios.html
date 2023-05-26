@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="content">
+  <div class="">
+    <div class="page-header-title">
+      <h4 class="page-title">Usuarios del Sistema Widmy</h4>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="page-content-wrapper">
+    <div class="container">
+      <!-- Content page -->
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <table class="table table-hover">
+            <thead>
+              <tr style="color: #0eb0ad">
+                <th font color="red">nombre</th>
+                <th font color="red">documento</th>
+                <th font color="red">perfil</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for usuario in usuarios_list %}
+              <tr>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.documento }}</td>
+                <td>{{ usuario.perfil }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <div style="text-align: center">
+            <button
+              type="button"
+              class="btn btn-primary waves-effect waves-light"
+              onClick=" window.location.href='/' "
+                >
+                    <a href="/historiasclinicas/create" style="text-decoration: n
+                    ; color: white;">
+                      Create
+                    </a>
+            >
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
