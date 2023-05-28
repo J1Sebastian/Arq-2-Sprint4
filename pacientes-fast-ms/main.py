@@ -14,7 +14,7 @@ app = FastAPI()
 @app.get("/", include_in_schema=False)
 async def root():
     # return RedirectResponse(url='/docs')
-    return {"message": "Pero mirá"}
+    return {"message": "Velocidad. Soy veloz"}
 
 @app.on_event("startup")
 def startup_db_client():
