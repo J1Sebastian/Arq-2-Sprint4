@@ -31,6 +31,7 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
 
 @router.get("/{id}", response_description='Obtener paciente por id', response_model=PacienteModel)
 def get_paciente(id: str, request: Request):
-    if (paciente := request.app.database["pacientes"].find_one({"_id": id})) is not None:
+    paciente = request.app.database["pacientes"].find_one({"_id": id})
+    if (paciente) is not None:
         return paciente
     raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
