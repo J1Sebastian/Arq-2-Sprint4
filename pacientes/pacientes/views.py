@@ -73,9 +73,16 @@ def paciente_view(request, pk):
 
 
 def PacienteList(request):
+    #queryset = Paciente.objects.all()
+    #context = list(queryset.values('id', 'nombre', 'documento', 'prioridad', 'fecha_nacimiento', 'peso', 'altura', 'tipo_sangre'))
+
     queryset = Paciente.objects.all()
-    context = list(queryset.values('id', 'nombre', 'documento', 'prioridad', 'fecha_nacimiento', 'peso', 'altura', 'tipo_sangre'))
-    return JsonResponse(context, safe=False)
+    pacientes = queryset.order_by('-id')[:10]
+    context = {
+        'pacientes_list': pacientes
+    }
+    return render(request, 'pacientes.html', context)
+
 
 def PacienteCreate(request):
     if request.method == 'POST':
@@ -90,4 +97,4 @@ def PacienteCreate(request):
         paciente.altura = data_json["altura"]
         paciente.tipo_sangre = data_json["tipo_sangre"]
         paciente.save()
-        return HttpResponse("successfully created variable")
+        return HttpResponse("successfully created paciente")

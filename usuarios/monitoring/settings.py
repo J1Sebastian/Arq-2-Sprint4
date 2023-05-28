@@ -57,7 +57,7 @@ ROOT_URLCONF = 'monitoring.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'usuarios', 'templates', 'usuarios')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

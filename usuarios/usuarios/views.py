@@ -2,10 +2,14 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
-from .usuarios.logic import logic_usuario as la
+from . import logic as la
 from django.http import HttpResponse
 from django.core import serializers
 import json
+
+from django.http import JsonResponse
+
+from .models import Usuario
 
 @csrf_exempt
 def usuarios_view(request):
@@ -40,3 +44,28 @@ def usuario_view(request, pk):
     if request.method == 'DELETE':
         la.delete_usuario(pk)
         return HttpResponse(status=204)
+    
+
+def UsuarioList(request):
+    #queryset = Usuario.objects.all()
+    #context = list(queryset.values('id', 'nombre', 'documento', 'perfil'))
+
+    queryset = Usuario.objects.all()
+    usuarios = queryset.order_by('-id')[:10]
+
+    context = {
+        'usuarios_list': usuarios
+    }
+
+    return render(request, 'usuarios.html', context)
+
+def UsuarioCreate(request):
+    if request.method == 'POST':
+        data = request.body.decode('utf-8')
+        data_json = json.loads(data)
+        usuario = Usuario()
+        usuario.nombre = data_json['nombre']
+        usuario.documento = data_json['documento']
+        usuario.perfil = data_json['perfil']
+        usuario.save()
+        return HttpResponse("successfully created usuario")
