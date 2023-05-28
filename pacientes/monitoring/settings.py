@@ -76,16 +76,16 @@ WSGI_APPLICATION = 'monitoring.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "pacientes_db", 
-        "USER": "pacientes_user", 
-        "PASSWORD": "isis2503",
-        "HOST": "10.128.0.6",  # IP privada de la base de datos del ms
-        "PORT": "5432",  # 5432
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': "pacientes_db", 
+#         "USER": "pacientes_user", 
+#         "PASSWORD": "isis2503",
+#         "HOST": "10.128.0.6",  # IP privada de la base de datos del ms
+#         "PORT": "5432",  # 5432
+#     }
+# }
 
 
 # Password validation
@@ -158,3 +158,6 @@ AUTHENTICATION_BACKENDS = { 'autenticador.auth0backend.Auth0', 'django.contrib.a
 PATH_PACIENTES = "http://IP_PRIVADA_MS:8080/pacientes"
 PATH_EPS = "http://IP_PRIVADA_MS:8080/epss"
 PATH_USUARIOS = "http://IP_PRIVADA_MS:8080/usuarios"
+
+# MongoDB Atlas Config
+MONGO_CLI = os.environ['MONGO_CLIENT']

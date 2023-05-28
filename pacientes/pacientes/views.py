@@ -7,13 +7,39 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.http import JsonResponse
 
+from django.http import JsonResponse
+from pymongo import MongoClient
+import datetime
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.parsers import JSONParser
+from django.conf import settings
+from bson.objectid import ObjectId
+
 import json
 
 from .models import Paciente
 
-@csrf_exempt
+@api_view(["GET", "POST"])
 def pacientes_view(request):
+    client = MongoClient(settings.MONGO_CLI)
+    db = client.monitoring_db
+    pacientes = db['pacientes']
+
     if request.method == 'GET':
+        result = []
+        data = pacientes.find({})
+        for dto in data:
+            jsonData = {
+                'id': str(dto['_id']),
+                "paciente": dto['paciente'],
+                'threshold': dto['threshold']
+            }
+            result.append(jsonData)
+        client.close()
+        return JsonResponse(result, safe=False)
+
+
+
         id = request.GET.get("id", None)
         if id:
             paciente_dto = lp.get_paciente(id)
