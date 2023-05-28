@@ -1,25 +1,18 @@
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
-
-from models import PacienteModel
+from models import Paciente
 
 router = APIRouter()
 
-@router.post("/", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=PacienteModel)
-def post_paciente(request: Request, paciente: PacienteModel = Body(...)):
-    paciente = jsonable_encoder(paciente)
-    new_paciente = request.app.database["pacientes"].insert_one(paciente)
-    created_paciente = request.app.database["pacientes"].find_one(
-        {"_id": new_paciente.inserted_id
-    })
-    return created_paciente
+# CRUD
 
-@router.post("/create", response_description='Crear paciente con parametros', status_code=status.HTTP_201_CREATED)
+# Create
+
+@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED)
 def create_paciente(id_: int, nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
-    # Get database length
     paciente = {
-        "id": id_,
+        "_id": id_,
         "nombre": nombre,
         "documento": documento,
         "prioridad": prioridad,
@@ -28,24 +21,44 @@ def create_paciente(id_: int, nombre: str, documento: str, prioridad: str, fecha
         "altura": altura,
         "tipo_sangre": tipo_sangre
     }
-    request.app.database["pacientes"].insert_one(paciente)
-    return request.app.database["pacientes"].find_one({"_id": id_})
+    paciente = request.app.database["pacientes"].insert_one(paciente)
+    return request.app.database["pacientes"].find_one({"_id":paciente.inserted_id})
 
-@router.get("/{id}", response_description='Obtener paciente por id', response_model=PacienteModel)
-def get_paciente(id: int, request: Request):
-    paciente = request.app.database["pacientes"].find_one({"_id": id})
-    if (paciente) is not None:
-        return paciente
-    raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
+@router.post("/", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
+def post_paciente_json(request: Request, paciente: Paciente = Body(...)):
+    paciente = jsonable_encoder(paciente)
+    new_paciente = request.app.database["pacientes"].insert_one(paciente)
+    created_paciente = request.app.database["pacientes"].find_one(
+        {"_id": new_paciente.inserted_id
+    })
+    return created_paciente
 
-# Get all pacientes
-@router.get("/", response_description="Obtener todos los pacientes", response_model=List[PacienteModel])
+
+# Read
+
+@router.get("/", response_description='Ver todos los pacientes', response_model=List[Paciente])
 def get_pacientes(request: Request):
-    pacientes = list(request.app.database["pacientes"].find(limit=50))
+    pacientes = list(request.app.database["pacientes"].find())
     return pacientes
 
-# Delete all pacientes
+@router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
+def get_paciente(id: int, request: Request):
+    paciente = request.app.database["pacientes"].find_one({"_id": id})
+    if paciente is not None:
+        return paciente
+    raise HTTPException(status_code=404, detail=f"Paciente not found")
+
+
+# Delete
+
 @router.delete("/", response_description="Borrar todos los pacientes")
 def delete_pacientes(request: Request):
     request.app.database["pacientes"].delete_many({})
     return {"message": "Pacientes borrados"}
+
+@router.delete("/{id}", response_description="Borrar paciente")
+def delete_paciente(id: int, request: Request):
+    delete_result = request.app.database["pacientes"].delete_one({"_id": id})
+    if delete_result.deleted_count == 1:
+        return {"message": "Paciente borrado"}
+    raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
