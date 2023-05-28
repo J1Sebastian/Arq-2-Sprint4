@@ -7,7 +7,7 @@ media : str = "MEDIA"
 baja : str = "BAJA"
 
 class PacienteModel(BaseModel):
-    id: Optional[str] = Field(default_factory=uuid.uuid4, alias="_id")
+    id: Optional[int] = Field(default_factory=uuid.uuid4, alias="_id")
     nombre: str = Field(...)
     documento: str = Field(...)
     prioridad: str = Field(...)
