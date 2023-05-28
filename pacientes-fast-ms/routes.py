@@ -16,9 +16,10 @@ def post_paciente(request: Request, paciente: PacienteModel = Body(...)):
     return created_paciente
 
 @router.post("/create", response_description='Crear paciente con parametros', status_code=status.HTTP_201_CREATED)
-def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
+def create_paciente(id_: int, nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     # Get database length
     paciente = {
+        "id": id_,
         "nombre": nombre,
         "documento": documento,
         "prioridad": prioridad,
