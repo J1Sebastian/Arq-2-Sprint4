@@ -41,3 +41,9 @@ def get_paciente(id: str, request: Request):
 def get_pacientes(request: Request):
     pacientes = list(request.app.database["pacientes"].find(limit=50))
     return pacientes
+
+# Delete all pacientes
+@router.delete("/", response_description="Borrar todos los pacientes")
+def delete_pacientes(request: Request):
+    request.app.database["pacientes"].delete_many({})
+    return {"message": "Pacientes borrados"}
