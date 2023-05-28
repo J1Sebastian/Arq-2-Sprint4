@@ -10,7 +10,7 @@ router = APIRouter()
 # Create
 
 @router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED)
-def create_paciente(id_: int, nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
+def create_paciente(id_: str, nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     paciente = {
         "_id": id_,
         "nombre": nombre,
@@ -42,7 +42,7 @@ def get_pacientes(request: Request):
     return pacientes
 
 @router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
-def get_paciente(id: int, request: Request):
+def get_paciente(id: str, request: Request):
     paciente = request.app.database["pacientes"].find_one({"_id": id})
     if paciente is not None:
         return paciente
@@ -57,7 +57,7 @@ def delete_pacientes(request: Request):
     return {"message": "Pacientes borrados"}
 
 @router.delete("/{id}", response_description="Borrar paciente")
-def delete_paciente(id: int, request: Request):
+def delete_paciente(id: str, request: Request):
     delete_result = request.app.database["pacientes"].delete_one({"_id": id})
     if delete_result.deleted_count == 1:
         return {"message": "Paciente borrado"}
