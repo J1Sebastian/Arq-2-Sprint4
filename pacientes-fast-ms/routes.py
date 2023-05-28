@@ -8,6 +8,7 @@ router = APIRouter()
 
 @router.post("/", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=PacienteModel)
 def post_paciente(request: Request, paciente: PacienteModel = Body(...)):
+    paciente.id = str(request.app.database["pacientes"].count_documents({}))
     paciente = jsonable_encoder(paciente)
     new_paciente = request.app.database["pacientes"].insert_one(paciente)
     created_paciente = request.app.database["pacientes"].find_one(
@@ -17,7 +18,9 @@ def post_paciente(request: Request, paciente: PacienteModel = Body(...)):
 
 @router.post("/create", response_description='Crear paciente con parametros', status_code=status.HTTP_201_CREATED)
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
+    # Get database length
     paciente = {
+        "_id": str(request.app.database["pacientes"].count_documents({})),
         "nombre": nombre,
         "documento": documento,
         "prioridad": prioridad,
