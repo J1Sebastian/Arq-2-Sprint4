@@ -35,3 +35,11 @@ def get_paciente(id: str, request: Request):
     if (paciente) is not None:
         return paciente
     raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
+
+# Get all pacientes
+@router.get("/pacientes", response_description='Obtener todos los pacientes', response_model=List[PacienteModel])
+def get_pacientes(request: Request):
+    pacientes = []
+    for paciente in request.app.database["pacientes"].find():
+        pacientes.append(paciente)
+    return pacientes
