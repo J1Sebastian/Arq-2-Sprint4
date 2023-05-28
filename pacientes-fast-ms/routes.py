@@ -15,10 +15,14 @@ def create_paciente(request: Request, paciente: PacienteModel = Body(...)):
     })
     return created_paciente
 
+
 @router.get("/", response_description='Listar pacientes', response_model=List[PacienteModel])
 def list_pacientes(request: Request):
-    pacientes = list(request.app.database["pacientes"].find())
+    pacientes = []
+    for paciente in request.app.database["pacientes"].find():
+        pacientes.append(paciente)
     return pacientes
+
 
 @router.get("/{id}", response_description='Obtener paciente', response_model=PacienteModel)
 def get_paciente(id: int, request: Request):
