@@ -28,8 +28,8 @@ def create_paciente(id_: int, nombre: str, documento: str, prioridad: str, fecha
         "altura": altura,
         "tipo_sangre": tipo_sangre
     }
-    new_paciente = request.app.database["pacientes"].insert_one(paciente)
-    return request.app.database["pacientes"].find_one({"_id": new_paciente.inserted_id})
+    request.app.database["pacientes"].insert_one(paciente)
+    return request.app.database["pacientes"].find_one({"_id": id_})
 
 @router.get("/{id}", response_description='Obtener paciente por id', response_model=PacienteModel)
 def get_paciente(id: int, request: Request):
