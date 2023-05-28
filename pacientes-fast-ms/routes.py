@@ -10,9 +10,8 @@ router = APIRouter()
 # Create
 
 @router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED)
-def create_paciente(id_: str, nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
+def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     paciente = {
-        "_id": id_,
         "nombre": nombre,
         "documento": documento,
         "prioridad": prioridad,
