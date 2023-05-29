@@ -1,13 +1,14 @@
 from typing import Optional
 import uuid;
 from pydantic import BaseModel, Field
+from bson import ObjectId
 
 alta : str = "ALTA"
 media : str = "MEDIA"
 baja : str = "BAJA"
 
 class Paciente(BaseModel):
-    id: str = Field(default_factory=uuid.uuid4, alias="_id")
+    id: ObjectId = Field(default_factory=uuid.uuid4, alias="_id")
     nombre: str = Field(...)
     documento: str = Field(...)
     prioridad: str = Field(...)
