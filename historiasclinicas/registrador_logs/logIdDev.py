@@ -9,7 +9,7 @@ def encryptId(id, role, dateOfCreation, clinicHistoryId):
     textToEncrypt = str(id) + ',' + str(role) + ',' + str(dateOfCreation) + ',' + str(clinicHistoryId)
     cipher_suite = Fernet(b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
     ciphered_text = cipher_suite.encrypt(textToEncrypt.encode('utf-8'))
-    with open('historiasclinicas/registrador_log/id.json', 'r') as f:
+    with open('./id.json', 'r') as f:
         data = json.load(f)
     with open('./id.json', 'w') as f:
         if clinicHistoryId in data:
