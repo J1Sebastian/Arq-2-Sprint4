@@ -21,7 +21,7 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
         "tipo_sangre": tipo_sangre
     }
     paciente = request.app.database["pacientes"].insert_one(paciente)
-    return request.app.database["pacientes"].find_one({paciente.inserted_id})
+    return request.app.database["pacientes"].find_one(paciente.inserted_id)
 
 @router.post("/", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
 def post_paciente_json(request: Request, paciente: Paciente = Body(...)):
