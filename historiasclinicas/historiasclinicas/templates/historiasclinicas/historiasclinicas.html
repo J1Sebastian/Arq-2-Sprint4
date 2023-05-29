@@ -33,11 +33,11 @@
             <tbody>
               {% for historia_clinica in historia_clinica_list %}
               <tr>
-                <td>{{ historia_clinica.medicamentos.nombre }}</td>
-                <td>{{ historia_clinica.procedimientos.nombre }}</td>
-                <td>{{ historia_clinica.diagnosticos.nombre }}</td>
-                <td>{{ historia_clinica.consultas.fecha }}</td>
-                <td>{{ historia_clinica.paciente.nombre }}</td>
+                <td>{{ historia_clinica.medicamentos}}</td>
+                <td>{{ historia_clinica.procedimientos}}</td>
+                <td>{{ historia_clinica.diagnosticos}}</td>
+                <td>{{ historia_clinica.consultas}}</td>
+                <td>{{ historia_clinica.paciente}}</td>
                 <td>{{ historia_clinica.codigo }}</td>
                 <td>{{ historia_clinica.fecha_creacion }}</td>
                 <td>{{ historia_clinica.antecedentes }}</td>
@@ -62,7 +62,7 @@
             <button
               type="button"
               class="btn btn-primary waves-effect waves-light"
-              onClick=" window.location.href='/' "
+              onClick="window.location.href='/historiasclinicas/create'"
                 >
                     <a href="/historiasclinicas/create" style="text-decoration: n
                     ; color: white;">
