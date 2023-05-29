@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 from historiasclinicas.forms import HistoriaClinicaForm
-from historiasclinicas.registrador_logs.logIdDev import encryptId
+from registrador_logs.logIdDev import encryptId
+
 
 from .logic import logic_historia_clinica as hl
 from django.http import HttpResponse
