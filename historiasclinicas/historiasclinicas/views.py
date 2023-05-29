@@ -123,11 +123,10 @@ def historiaclinica_edit_view(request, id):
     # else:
     #     return HttpResponse("No tiene permisos para editar historias clinicas")
     
-# @login_required
+@login_required
 def historiaclinica_create_view(request):
-    # Authentication
-    # role = getRole(request)
-    # if role == "medico":
+    role = getRole(request)
+    if role == "medico":
 
         if request.method == 'POST':
             form = HistoriaClinicaForm(request.POST)
@@ -148,5 +147,5 @@ def historiaclinica_create_view(request):
             'form': form
         }
         return render(request, 'historiaclinica_create.html', context)
-    # else:
-    #     return HttpResponse("No tiene permisos para crear historias clinicas")
+    else:
+        return HttpResponse("No tiene permisos para crear historias clinicas")
