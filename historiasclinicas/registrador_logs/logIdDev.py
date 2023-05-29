@@ -9,9 +9,9 @@ def encryptId(id, role, dateOfCreation, clinicHistoryId):
     textToEncrypt = str(id) + ',' + str(role) + ',' + str(dateOfCreation) + ',' + str(clinicHistoryId)
     cipher_suite = Fernet(b'QeOzYI2XSk2tAiz1IAcdYnUrEGJzGPbsfwHeXIU4Ecw=')
     ciphered_text = cipher_suite.encrypt(textToEncrypt.encode('utf-8'))
-    with open('./id.json', 'w') as f:
+    with open('./registrador_logs/id.json', 'r') as f:
         data = json.load(f)
-    with open('./id.json', 'w') as f:
+    with open('./registrador_logs/id.json', 'w') as f:
         if clinicHistoryId in data:
             listIds = list(data.get(clinicHistoryId))
             listIds.append(ciphered_text.decode('utf-8'))
@@ -24,7 +24,7 @@ def encryptId(id, role, dateOfCreation, clinicHistoryId):
     return ciphered_text
 
 def decryptId(position, key):
-    with open('./id.json', 'r') as f:
+    with open('./registrador_logs/id.json', 'r') as f:
         data = json.load(f)
         cipher_suite = Fernet(key)
         ciphered_list = data.get(position)
