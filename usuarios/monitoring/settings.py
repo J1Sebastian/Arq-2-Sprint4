@@ -145,7 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication
 
 LOGIN_URL = "/login/auth0" 
-LOGIN_REDIRECT_URL = "/" 
+LOGIN_REDIRECT_URL = "/usuarios" 
 LOGOUT_REDIRECT_URL = "https://widmy-lasdivinas.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F34.170.215.124:8080/usuarios"
 SOCIAL_AUTH_TRAILING_SLASH = False # Remove end slash from routes 
 SOCIAL_AUTH_AUTH0_DOMAIN = 'widmy-lasdivinas.us.auth0.com' 
