@@ -16,15 +16,15 @@ class HistoriaClinica(models.Model):
     # consultas = models.ForeignKey(Consulta, on_delete=models.CASCADE, null=True)
     # paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, null=True)
 
-    medicamentos = models.CharField(max_length=50)
-    procedimientos = models.CharField(max_length=50)
-    diagnosticos = models.CharField(max_length=50)
-    consultas = models.CharField(max_length=50)
+    medicamentos = models.CharField(max_length=50, null=True)
+    procedimientos = models.CharField(max_length=50, null=True)
+    diagnosticos = models.CharField(max_length=50, null=True)
+    consultas = models.CharField(max_length=50, null=True)
     paciente = models.IntegerField(null=False, default=None)
 
     codigo = models.CharField(max_length=50, default="0")
     fecha_creacion = models.DateField(auto_now_add=True)
-    antecedentes = models.CharField(max_length=400)
+    antecedentes = models.CharField(max_length=400, null=True)
     alergias = models.CharField(max_length=400)
 
     def __str__(self):
