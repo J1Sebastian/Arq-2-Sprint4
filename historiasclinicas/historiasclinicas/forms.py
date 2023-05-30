@@ -25,10 +25,10 @@ class HistoriaClinicaForm(forms.ModelForm):
 
         widgets = {
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
-            'antecedentes': forms.TextInput(attrs={'class': 'form-control'}),
-            'alergias': forms.TextInput(attrs={'class': 'form-control'}),
-            'medicamentos': forms.TextInput(attrs={'class': 'form-control'}),
-            'procedimientos': forms.TextInput(attrs={'class': 'form-control'}),
+            'antecedentes': forms.TextInput(attrs={'class': 'form-control'}, required=False),
+            'alergias': forms.TextInput(attrs={'class': 'form-control'}, required=False),
+            'medicamentos': forms.TextInput(attrs={'class': 'form-control'}, required=False),
+            'procedimientos': forms.TextInput(attrs={'class': 'form-control'}, required=False),
             'diagnosticos': forms.TextInput(attrs={'class': 'form-control'}),
             'consultas': forms.TextInput(attrs={'class': 'form-control'}),
 
