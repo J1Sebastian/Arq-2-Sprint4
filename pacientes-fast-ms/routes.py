@@ -171,9 +171,11 @@ def fill_database(n_pacientes: int, n_prioritarios: int, request: Request):
         "tipo_sangre": "B+",
     }
     for i in range(n_pacientes):
+        paciente["_id"] = str(uuid.uuid4())
         paciente = jsonable_encoder(paciente)
         request.app.database["pacientes"].insert_one(paciente)
     for i in range(n_prioritarios):
+        paciente_pri["_id"] = str(uuid.uuid4())
         paciente = jsonable_encoder(paciente_pri)
         request.app.database["pacientes_prioritarios"].insert_one(paciente)
     return {"message": f"Se llenó la base de datos con {n_pacientes} pacientes y {n_prioritarios} pacientes prioritarios"}
