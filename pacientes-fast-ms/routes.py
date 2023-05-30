@@ -1,3 +1,4 @@
+import uuid
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
@@ -12,6 +13,7 @@ router = APIRouter()
 @router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     paciente = {
+        "_id": ": " + str(uuid.uuid4()),
         "nombre": nombre,
         "documento": documento,
         "prioridad": prioridad,
