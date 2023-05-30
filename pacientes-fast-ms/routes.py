@@ -102,7 +102,7 @@ def delete_pacientes(request: Request):
 
 
 @router.delete("/", response_description="Borrar todos los pacientes prioritarios")
-def delete_pacientes(request: Request):
+def delete_pacientes_prioritarios(request: Request):
     request.app.database["pacientes_prioritarios"].delete_many({})
     return {"message": "Pacientes prioritarios borrados"}
 
