@@ -7,6 +7,7 @@ class HistoriaClinicaForm(forms.ModelForm):
     
     class Meta:
         model = HistoriaClinica
+        paciente = forms.ChoiceField(choices=[])
         def get_pacientes():
             r = requests.get('http://34.170.116.216:8080/pacientes/')
             pacientes = r.json()
@@ -18,6 +19,8 @@ class HistoriaClinicaForm(forms.ModelForm):
         def __init__(self, *args, **kwargs):
             super(HistoriaClinicaForm, self).__init__(*args, **kwargs)
             self.fields['paciente'].choices = self.get_pacientes()
+            self.fields['paciente'].widget.attrs.update({'class': 'form-control'})
+
 
         widgets = {
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
