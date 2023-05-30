@@ -4,6 +4,7 @@ from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List, Union
 from models import Paciente, PacientePrioritario
+from fastapi.templating import Jinja2Templates
 
 router = APIRouter()
 
@@ -101,6 +102,17 @@ def get_pacientes(request: Request):
     today = today.strftime("%Y-%m-%d")
     pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
     return pacientes
+
+templates = Jinja2Templates(directory="templates")
+# Get prioritary patients older than 18
+@router.get("/prioritario18/home", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
+def get_pacientes(request: Request):
+    #Get today's date as string in format YYYY-MM-DD
+    today = date.today()
+    today = today.replace(year=today.year - 18)
+    today = today.strftime("%Y-%m-%d")
+    pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
+    return templates.TemplateResponse("pacientes_prioritarios.html", {"request": request, "pacientes": pacientes})
 
 
 # @router.get("/{id}", response_description='Ver paciente', response_model=Paciente)

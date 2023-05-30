@@ -5,11 +5,13 @@ from dotenv import dotenv_values
 from routes import router as api_router
 from fastapi.responses import RedirectResponse
 import uvicorn
+from fastapi.staticfiles import StaticFiles
+
 
 config = dotenv_values(".env")
 
 app = FastAPI()
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(api_router, tags=["paciente"], prefix="/pacientes")
 
 @app.get("/")
