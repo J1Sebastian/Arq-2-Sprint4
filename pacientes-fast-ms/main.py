@@ -11,7 +11,6 @@ from fastapi.staticfiles import StaticFiles
 config = dotenv_values(".env")
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 app.include_router(api_router, tags=["paciente"], prefix="/pacientes")
 
 @app.get("/")
