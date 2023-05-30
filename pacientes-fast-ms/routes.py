@@ -54,7 +54,7 @@ def get_pacientes(request: Request):
     pacientes = list(request.app.database["pacientes"].find())
     return pacientes
 
-# @router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
+@router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
 def get_paciente(id: str, request: Request):
     paciente = request.app.database["pacientes"].find_one({"_id": id})
     if paciente is not None:
@@ -69,7 +69,7 @@ def delete_pacientes(request: Request):
     request.app.database["pacientes"].delete_many({})
     return {"message": "Pacientes borrados"}
 
-# @router.delete("/{id}", response_description="Borrar paciente")
+@router.delete("/{id}", response_description="Borrar paciente")
 def delete_paciente(id: str, request: Request):
     delete_result = request.app.database["pacientes"].delete_one({"_id": id})
     if delete_result.deleted_count == 1:
