@@ -12,8 +12,8 @@ router = APIRouter()
 
 @router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
-    altura = altura / 100
-    bmi = peso / (altura * altura)
+    altura_cm = altura / 100
+    bmi = peso / (altura_cm * altura_cm)
     print(bmi)
     if bmi < 18.5:
         tipo_peso = "BAJO PESO"
