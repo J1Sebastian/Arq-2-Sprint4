@@ -97,6 +97,7 @@ def get_pacientes(request: Request):
 def get_pacientes(request: Request):
     #Get today's date as string in format YYYY-MM-DD
     today = date.today()
+    today = today.replace(year=today.year - 18)
     today = today.strftime("%Y-%m-%d")
     pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
     return pacientes
