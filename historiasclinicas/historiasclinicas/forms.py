@@ -52,12 +52,12 @@ class HistoriaClinicaForm(forms.ModelForm):
         ]
 
         labels = {
-            'paciente': 'Paciente',
-            'codigo': 'Codigo',
+            'paciente': 'Paciente *',
+            'codigo': 'Codigo *',
             'antecedentes': 'Antecedentes',
             'alergias': 'Alergias',
             'medicamentos': 'Medicamentos',
             'procedimientos': 'Procedimientos',
-            'diagnosticos': 'Diagnosticos',
-            'consultas': 'Consultas'
+            'diagnosticos': 'Diagnosticos *',
+            'consultas': 'Consultas *'
         }
