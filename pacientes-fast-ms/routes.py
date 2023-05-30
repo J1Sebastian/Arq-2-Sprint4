@@ -14,7 +14,7 @@ router = APIRouter()
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     
     bmi = peso / (altura * altura)
-    tipo_peso = "OBESIDAD TIPO III"
+    print(bmi)
     if bmi < 18.5:
         tipo_peso = "BAJO PESO"
     elif bmi >= 18.5 and bmi < 25:
@@ -25,6 +25,9 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
         tipo_peso = "OBESIDAD TIPO I"
     elif bmi >= 35 and bmi < 40:
         tipo_peso = "OBESIDAD TIPO II"
+    else:
+        tipo_peso = "OBESIDAD TIPO III"
+    print(tipo_peso)
 
     if tipo_peso in ["OBESIDAD TIPO I", "OBESIDAD TIPO II", "OBESIDAD TIPO III"]:
         paciente = {
@@ -85,12 +88,19 @@ def get_pacientes(request: Request):
     pacientes = list(request.app.database["pacientes"].find())
     return pacientes
 
-@router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
-def get_paciente(id: str, request: Request):
-    paciente = request.app.database["pacientes"].find_one({"_id": id})
-    if paciente is not None:
-        return paciente
-    raise HTTPException(status_code=404, detail=f"Paciente not found")
+# Get prioritary patients
+@router.get("/", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
+def get_pacientes(request: Request):
+    pacientes = list(request.app.database["pacientes_prioritarios"].find())
+    return pacientes
+
+
+# @router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
+# def get_paciente(id: str, request: Request):
+#     paciente = request.app.database["pacientes"].find_one({"_id": id})
+#     if paciente is not None:
+#         return paciente
+#     raise HTTPException(status_code=404, detail=f"Paciente not found")
 
 
 # Delete
@@ -100,9 +110,9 @@ def delete_pacientes(request: Request):
     request.app.database["pacientes"].delete_many({})
     return {"message": "Pacientes borrados"}
 
-@router.delete("/{id}", response_description="Borrar paciente")
-def delete_paciente(id: str, request: Request):
-    delete_result = request.app.database["pacientes"].delete_one({"_id": id})
-    if delete_result.deleted_count == 1:
-        return {"message": "Paciente borrado"}
-    raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
+# @router.delete("/{id}", response_description="Borrar paciente")
+# def delete_paciente(id: str, request: Request):
+#     delete_result = request.app.database["pacientes"].delete_one({"_id": id})
+#     if delete_result.deleted_count == 1:
+#         return {"message": "Paciente borrado"}
+#     raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
