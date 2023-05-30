@@ -20,7 +20,7 @@ class HistoriaClinica(models.Model):
     procedimientos = models.CharField(max_length=50, null=True)
     diagnosticos = models.CharField(max_length=50, null=True)
     consultas = models.CharField(max_length=50, null=True)
-    paciente = models.IntegerField(null=False, default=None)
+    paciente = models.CharField(max_length=100, null=False, default=None)
 
     codigo = models.CharField(max_length=50, default="0")
     fecha_creacion = models.DateField(auto_now_add=True)
