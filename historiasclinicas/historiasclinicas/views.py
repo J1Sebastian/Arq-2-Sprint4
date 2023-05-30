@@ -145,6 +145,7 @@ def historiaclinica_create_view(request):
                 print(form.errors)
         else:
             form = HistoriaClinicaForm()
+            historia_clinica = hl.delete_all_historias_clinicas()
         context = {
             'form': form
         }

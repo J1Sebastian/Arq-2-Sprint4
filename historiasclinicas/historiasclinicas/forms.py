@@ -6,6 +6,14 @@ import requests
 class HistoriaClinicaForm(forms.ModelForm):
 
     paciente = forms.ChoiceField(choices=[])
+    codigo = forms.CharField(max_length=100, required=True)
+    antecedentes = forms.CharField(max_length=100, required=False)
+    alergias = forms.CharField(max_length=100, required=False)
+    medicamentos = forms.CharField(max_length=100, required=False)
+    procedimientos = forms.CharField(max_length=100, required=False)
+    diagnosticos = forms.CharField(max_length=100, required=True)
+    consultas = forms.CharField(max_length=100, required=True)
+
     
     def __init__(self, *args, **kwargs):
         super(HistoriaClinicaForm, self).__init__(*args, **kwargs)
@@ -22,19 +30,6 @@ class HistoriaClinicaForm(forms.ModelForm):
     
     class Meta:
         model = HistoriaClinica
-
-        widgets = {
-            'codigo': forms.TextInput(attrs={'class': 'form-control'}),
-            'antecedentes': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-            'alergias': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-            'medicamentos': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-            'procedimientos': forms.TextInput(attrs={'class': 'form-control', 'required': False}),
-            'diagnosticos': forms.TextInput(attrs={'class': 'form-control'}),
-            'consultas': forms.TextInput(attrs={'class': 'form-control'}),
-
-        }
-
-
 
         fields = [
             'paciente',
