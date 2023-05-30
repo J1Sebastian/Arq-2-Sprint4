@@ -10,7 +10,7 @@ class HistoriaClinicaForm(forms.ModelForm):
         self.fields['paciente'].choices = self.get_pacientes()
         self.fields['paciente'].widget.attrs.update({'class': 'form-control'})
 
-    def get_pacientes():
+    def get_pacientes(self):
         r = requests.get('http://34.170.116.216:8080/pacientes/')
         pacientes = r.json()
         choices = []
