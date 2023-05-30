@@ -1,3 +1,4 @@
+from datetime import date
 import uuid
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
@@ -89,6 +90,15 @@ def get_pacientes(request: Request):
 @router.get("/prioritario", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
 def get_pacientes(request: Request):
     pacientes = list(request.app.database["pacientes_prioritarios"].find())
+    return pacientes
+
+# Get prioritary patients older than 18
+@router.get("/prioritario18", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
+def get_pacientes(request: Request):
+    #Get today's date as string in format YYYY-MM-DD
+    today = date.today()
+    today = today.strftime("%Y-%m-%d")
+    pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
     return pacientes
 
 
