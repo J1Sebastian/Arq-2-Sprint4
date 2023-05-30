@@ -4,6 +4,8 @@ import requests
 
 
 class HistoriaClinicaForm(forms.ModelForm):
+
+    paciente = forms.ChoiceField(choices=[])
     
     def __init__(self, *args, **kwargs):
         super(HistoriaClinicaForm, self).__init__(*args, **kwargs)
