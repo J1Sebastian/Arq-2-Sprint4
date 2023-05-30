@@ -85,8 +85,8 @@ def post_paciente_prioritario_json(request: Request, paciente: PacientePrioritar
 
 @router.get("/", response_description='Ver todos los pacientes', response_model=List[Paciente])
 def get_pacientes(request: Request):
-    pacientes = list(request.app.database["pacientes"].find())
-    return pacientes
+    pacientes = list(request.app.database["pacientes"].find().limit(10))
+    return templates.TemplateResponse("pacientes.html", {"request": request, "pacientes": pacientes})
 
 # Get prioritary patients
 @router.get("/prioritario", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
