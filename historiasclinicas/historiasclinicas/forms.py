@@ -17,7 +17,7 @@ class HistoriaClinicaForm(forms.ModelForm):
         pacientes = r.json()
         choices = []
         for paciente in pacientes:
-            choices.append((paciente['_id'], paciente['nombre']+'-'+paciente['documento']))
+            choices.append((paciente['nombre'], paciente['nombre']+'-'+paciente['documento']))
         return choices
     
     class Meta:
