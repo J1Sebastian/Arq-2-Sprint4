@@ -64,5 +64,9 @@ def update_historia_clinica(historia_clinica_pk, new_historia_clinica):
     historia_clinica.save()
     return historia_clinica
 
+def delete_all_historias_clinicas():
+    HistoriaClinica.objects.all().delete()
+    return ()
+
 
 
