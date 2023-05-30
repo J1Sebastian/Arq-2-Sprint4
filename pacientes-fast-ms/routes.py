@@ -15,6 +15,7 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
     altura_m = altura / 100
     bmi = round(peso / (altura_m * altura_m), 2)
     print(bmi)
+    obeso = False
     if bmi < 18.5:
         tipo_peso = "BAJO PESO"
     elif bmi >= 18.5 and bmi < 25:
@@ -22,10 +23,13 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
     elif bmi >= 25 and bmi < 30:
         tipo_peso = "SOBREPESO"
     elif bmi >= 30 and bmi < 35:
+        obeso = True
         tipo_peso = "OBESIDAD TIPO I"
     elif bmi >= 35 and bmi < 40:
+        obeso = True
         tipo_peso = "OBESIDAD TIPO II"
     else:
+        obeso = True
         tipo_peso = "OBESIDAD TIPO III"
     print(tipo_peso)
 
@@ -39,12 +43,15 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
         "altura": altura,
         "tipo_sangre": tipo_sangre
     }
-    if tipo_peso in ["OBESIDAD TIPO I", "OBESIDAD TIPO II", "OBESIDAD TIPO III"]:
+    if obeso:
         paciente["BMI"] = bmi
         paciente["tipo_peso"] = tipo_peso
         bd = "pacientes_prioritarios"
     else:
         bd = "pacientes"
+
+    print("Obseso" if obeso else "Normal")
+
     paciente = request.app.database[bd].insert_one(paciente)
     created_paciente = request.app.database[bd].find_one(
         {"_id": paciente.inserted_id
