@@ -112,7 +112,7 @@ def get_pacientes(request: Request):
     today = date.today()
     today = today.replace(year=today.year - 18)
     today = today.strftime("%Y-%m-%d")
-    pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
+    pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}).limit(10))
     print(pacientes)
     return templates.TemplateResponse("pacientes_prioritarios18.html", {"request": request, "pacientes": pacientes})
 
