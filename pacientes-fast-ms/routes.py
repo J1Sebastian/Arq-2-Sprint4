@@ -148,8 +148,6 @@ def delete_pacientes_prioritarios(request: Request):
 # Fill database
 @router.post("/filldb", response_description="Llenar la base de datos")
 def fill_database(n_pacientes: int, n_prioritarios: int, request: Request):
-    request.app.database["pacientes"].delete_many({})
-    request.app.database["pacientes_prioritarios"].delete_many({})
     paciente_pri = {
         "nombre": "Armando Pérez",
         "documento": "52672861",
