@@ -75,7 +75,7 @@ def post_paciente_json(request: Request, paciente: Paciente = Body(...)):
 def post_paciente_prioritario_json(request: Request, paciente: PacientePrioritario = Body(...)):
     paciente = jsonable_encoder(paciente)
     new_paciente = request.app.database["pacientes_prioritarios"].insert_one(paciente)
-    created_paciente = request.app.database["pacientes_prioriatios"].find_one(
+    created_paciente = request.app.database["pacientes_prioritarios"].find_one(
         {"_id": new_paciente.inserted_id
     })
     return created_paciente
@@ -112,7 +112,7 @@ def get_pacientes(request: Request):
     today = today.replace(year=today.year - 18)
     today = today.strftime("%Y-%m-%d")
     pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
-    return templates.TemplateResponse("pacientes_prioritarios.html", {"request": request, "pacientes": pacientes})
+    return templates.TemplateResponse("pacientes_prioritarios18.html", {"request": request, "pacientes": pacientes})
 
 
 # @router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
