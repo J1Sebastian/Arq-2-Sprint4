@@ -1,7 +1,7 @@
 import uuid
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
-from typing import List
+from typing import List, Union
 from models import Paciente, PacientePrioritario
 
 router = APIRouter()
@@ -10,7 +10,7 @@ router = APIRouter()
 
 # Create
 
-@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente|PacientePrioritario)
+@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Union[Paciente,PacientePrioritario])
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     altura_m = altura / 100
     bmi = round(peso / (altura_m * altura_m), 2)
