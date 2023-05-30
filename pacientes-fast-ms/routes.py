@@ -7,6 +7,7 @@ from models import Paciente, PacientePrioritario
 from fastapi.templating import Jinja2Templates
 
 router = APIRouter()
+templates = Jinja2Templates(directory="templates")
 
 # CRUD
 
@@ -103,15 +104,16 @@ def get_pacientes(request: Request):
     pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
     return pacientes
 
-templates = Jinja2Templates(directory="templates")
+
 # Get prioritary patients older than 18
-@router.get("/prioritario18/home", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
+@router.get("/consulta", response_description='Ver todos los pacientes prioritarios', response_model=List[PacientePrioritario])
 def get_pacientes(request: Request):
     #Get today's date as string in format YYYY-MM-DD
     today = date.today()
     today = today.replace(year=today.year - 18)
     today = today.strftime("%Y-%m-%d")
     pacientes = list(request.app.database["pacientes_prioritarios"].find({"fecha_nacimiento": {"$lte": today}}))
+    print(pacientes)
     return templates.TemplateResponse("pacientes_prioritarios18.html", {"request": request, "pacientes": pacientes})
 
 

@@ -3,7 +3,7 @@
 <div class="content">
   <div class="">
     <div class="page-header-title">
-      <h4 class="page-title">Últimos 10 Pacientes</h4>
+      <h4 class="page-title">Últimos 10 Pacientes Prioritarios Mayores de edad</h4>
     </div>
   </div>
 
@@ -28,7 +28,7 @@
               </tr>
             </thead>
             <tbody>
-              {% for paciente in pacientes_list %}
+              {% for paciente in pacientes %}
               <tr>
                 <td>{{ paciente.nombre }}</td>
                 <td>{{ paciente.documento }}</td>
