@@ -50,7 +50,7 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
     else:
         bd = "pacientes"
 
-    print("Obseso" if obeso else "Normal")
+    print("Anormal" if obeso else "Normal")
 
     paciente = request.app.database[bd].insert_one(paciente)
     created_paciente = request.app.database[bd].find_one(
