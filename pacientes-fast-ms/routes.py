@@ -10,10 +10,10 @@ router = APIRouter()
 
 # Create
 
-@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
+@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente|PacientePrioritario)
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     altura_m = altura / 100
-    bmi = peso / (altura_m * altura_m)
+    bmi = round(peso / (altura_m * altura_m), 2)
     print(bmi)
     if bmi < 18.5:
         tipo_peso = "BAJO PESO"
@@ -29,31 +29,21 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
         tipo_peso = "OBESIDAD TIPO III"
     print(tipo_peso)
 
+    paciente = {
+        "_id": str(uuid.uuid4()),
+        "nombre": nombre,
+        "documento": documento,
+        "prioridad": prioridad,
+        "fecha_nacimiento": fecha_nacimiento,
+        "peso": peso,
+        "altura": altura,
+        "tipo_sangre": tipo_sangre
+    }
     if tipo_peso in ["OBESIDAD TIPO I", "OBESIDAD TIPO II", "OBESIDAD TIPO III"]:
-        paciente = {
-            "_id": str(uuid.uuid4()),
-            "nombre": nombre,
-            "documento": documento,
-            "prioridad": prioridad,
-            "fecha_nacimiento": fecha_nacimiento,
-            "peso": peso,
-            "altura": altura,
-            "tipo_sangre": tipo_sangre,
-            "BMI": bmi,
-            "tipo_peso": tipo_peso
-        }
+        paciente["BMI"] = bmi
+        paciente["tipo_peso"] = tipo_peso
         bd = "pacientes_prioritarios"
     else:
-        paciente = {
-            "_id": str(uuid.uuid4()),
-            "nombre": nombre,
-            "documento": documento,
-            "prioridad": prioridad,
-            "fecha_nacimiento": fecha_nacimiento,
-            "peso": peso,
-            "altura": altura,
-            "tipo_sangre": tipo_sangre
-        }
         bd = "pacientes"
     paciente = request.app.database[bd].insert_one(paciente)
     created_paciente = request.app.database[bd].find_one(
