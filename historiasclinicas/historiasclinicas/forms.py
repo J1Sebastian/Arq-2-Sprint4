@@ -20,7 +20,6 @@ class HistoriaClinicaForm(forms.ModelForm):
             self.fields['paciente'].choices = self.get_pacientes()
 
         widgets = {
-            'paciente': forms.Select(attrs={'class': 'form-control'}),
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
             'antecedentes': forms.TextInput(attrs={'class': 'form-control'}),
             'alergias': forms.TextInput(attrs={'class': 'form-control'}),
