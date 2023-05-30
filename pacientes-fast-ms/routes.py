@@ -12,18 +12,48 @@ router = APIRouter()
 
 @router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
-    paciente = {
-        "_id": ": " + str(uuid.uuid4()),
-        "nombre": nombre,
-        "documento": documento,
-        "prioridad": prioridad,
-        "fecha_nacimiento": fecha_nacimiento,
-        "peso": peso,
-        "altura": altura,
-        "tipo_sangre": tipo_sangre
-    }
-    paciente = request.app.database["pacientes"].insert_one(paciente)
-    created_paciente = request.app.database["pacientes"].find_one(
+    
+    bmi = peso / (altura * altura)
+    tipo_peso = "OBESIDAD TIPO III"
+    if bmi < 18.5:
+        tipo_peso = "BAJO PESO"
+    elif bmi >= 18.5 and bmi < 25:
+        tipo_peso = "NORMAL"
+    elif bmi >= 25 and bmi < 30:
+        tipo_peso = "SOBREPESO"
+    elif bmi >= 30 and bmi < 35:
+        tipo_peso = "OBESIDAD TIPO I"
+    elif bmi >= 35 and bmi < 40:
+        tipo_peso = "OBESIDAD TIPO II"
+
+    if tipo_peso in ["OBESIDAD TIPO I", "OBESIDAD TIPO II", "OBESIDAD TIPO III"]:
+        paciente = {
+            "_id": str(uuid.uuid4()),
+            "nombre": nombre,
+            "documento": documento,
+            "prioridad": prioridad,
+            "fecha_nacimiento": fecha_nacimiento,
+            "peso": peso,
+            "altura": altura,
+            "tipo_sangre": tipo_sangre,
+            "BMI": bmi,
+            "tipo_peso": tipo_peso
+        }
+        bd = "pacientes_prioritarios"
+    else:
+        paciente = {
+            "_id": str(uuid.uuid4()),
+            "nombre": nombre,
+            "documento": documento,
+            "prioridad": prioridad,
+            "fecha_nacimiento": fecha_nacimiento,
+            "peso": peso,
+            "altura": altura,
+            "tipo_sangre": tipo_sangre
+        }
+        bd = "pacientes"
+    paciente = request.app.database[bd].insert_one(paciente)
+    created_paciente = request.app.database[bd].find_one(
         {"_id": paciente.inserted_id
     })
     return created_paciente
@@ -47,7 +77,6 @@ def post_paciente_prioritario_json(request: Request, paciente: PacientePrioritar
         {"_id": new_paciente.inserted_id
     })
     return created_paciente
-
 
 # Read
 
