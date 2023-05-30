@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body, Request, Response, HTTPException, status
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from models import Paciente
+from models import Paciente, PacientePrioritario
 
 router = APIRouter()
 
@@ -9,7 +9,7 @@ router = APIRouter()
 
 # Create
 
-@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED)
+@router.post("/create", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
 def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimiento: str, peso: int, altura: int, tipo_sangre: str, request: Request):
     paciente = {
         "nombre": nombre,
@@ -21,13 +21,27 @@ def create_paciente(nombre: str, documento: str, prioridad: str, fecha_nacimient
         "tipo_sangre": tipo_sangre
     }
     paciente = request.app.database["pacientes"].insert_one(paciente)
-    return request.app.database["pacientes"].find_one({paciente.inserted_id})
+    created_paciente = request.app.database["pacientes"].find_one(
+        {"_id": paciente.inserted_id
+    })
+    return created_paciente
 
 @router.post("/", response_description='Crear paciente', status_code=status.HTTP_201_CREATED,response_model=Paciente)
 def post_paciente_json(request: Request, paciente: Paciente = Body(...)):
     paciente = jsonable_encoder(paciente)
     new_paciente = request.app.database["pacientes"].insert_one(paciente)
     created_paciente = request.app.database["pacientes"].find_one(
+        {"_id": new_paciente.inserted_id
+    })
+    return created_paciente
+
+# Post priority patient
+
+@router.post("/prioritario", response_description='Crear paciente prioritario', status_code=status.HTTP_201_CREATED, response_model=PacientePrioritario)
+def post_paciente_prioritario_json(request: Request, paciente: PacientePrioritario = Body(...)):
+    paciente = jsonable_encoder(paciente)
+    new_paciente = request.app.database["pacientes_prioritarios"].insert_one(paciente)
+    created_paciente = request.app.database["pacientes_prioriatios"].find_one(
         {"_id": new_paciente.inserted_id
     })
     return created_paciente
@@ -40,7 +54,7 @@ def get_pacientes(request: Request):
     pacientes = list(request.app.database["pacientes"].find())
     return pacientes
 
-@router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
+# @router.get("/{id}", response_description='Ver paciente', response_model=Paciente)
 def get_paciente(id: str, request: Request):
     paciente = request.app.database["pacientes"].find_one({"_id": id})
     if paciente is not None:
@@ -55,7 +69,7 @@ def delete_pacientes(request: Request):
     request.app.database["pacientes"].delete_many({})
     return {"message": "Pacientes borrados"}
 
-@router.delete("/{id}", response_description="Borrar paciente")
+# @router.delete("/{id}", response_description="Borrar paciente")
 def delete_paciente(id: str, request: Request):
     delete_result = request.app.database["pacientes"].delete_one({"_id": id})
     if delete_result.deleted_count == 1:
