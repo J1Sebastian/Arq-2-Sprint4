@@ -11,6 +11,12 @@ class HistoriaClinicaForm(forms.ModelForm):
         super(HistoriaClinicaForm, self).__init__(*args, **kwargs)
         self.fields['paciente'].choices = self.get_pacientes()
         self.fields['paciente'].widget.attrs.update({'class': 'form-control'})
+        meta_fields = set(self.Meta.fields)
+
+        # Rearrange the fields list
+        self.fields = forms.OrderedDict(
+            (field_name, self.fields[field_name])
+            for field_name in [*self.fields] if field_name not in meta_fields)
 
     def get_pacientes(self):
         r = requests.get('http://34.170.116.216:8080/pacientes/')
