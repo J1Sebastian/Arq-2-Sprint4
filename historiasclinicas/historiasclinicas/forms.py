@@ -7,12 +7,19 @@ class HistoriaClinicaForm(forms.ModelForm):
 
     paciente = forms.ChoiceField(choices=[])
     codigo = forms.CharField(max_length=100, required=True)
+    codigo.widget.attrs.update({'class': 'form-control'})
     antecedentes = forms.CharField(max_length=100, required=False)
+    antecedentes.widget.attrs.update({'class': 'form-control'})
     alergias = forms.CharField(max_length=100, required=False)
+    alergias.widget.attrs.update({'class': 'form-control'})
     medicamentos = forms.CharField(max_length=100, required=False)
+    medicamentos.widget.attrs.update({'class': 'form-control'})
     procedimientos = forms.CharField(max_length=100, required=False)
+    procedimientos.widget.attrs.update({'class': 'form-control'})
     diagnosticos = forms.CharField(max_length=100, required=True)
+    diagnosticos.widget.attrs.update({'class': 'form-control'})
     consultas = forms.CharField(max_length=100, required=True)
+    consultas.widget.attrs.update({'class': 'form-control'})
 
     
     def __init__(self, *args, **kwargs):
