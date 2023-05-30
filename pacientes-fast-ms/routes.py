@@ -145,3 +145,37 @@ def delete_pacientes_prioritarios(request: Request):
 #     if delete_result.deleted_count == 1:
 #         return {"message": "Paciente borrado"}
 #     raise HTTPException(status_code=404, detail=f"Paciente {id} no encontrado")
+
+
+# Fill database
+@router.post("/filldb", response_description="Llenar la base de datos")
+def fill_database(n_pacientes: int, n_prioritarios: int, request: Request):
+    paciente_pri = {
+        "nombre": "Armando Pérez",
+        "documento": "52672861",
+        "prioridad": "ALTA",
+        "fecha_nacimiento": "1998-11-15",
+        "peso": 100,
+        "altura": 179,
+        "tipo_sangre": "O+",
+        "BMI": 30.86,
+        "tipo_peso": "OBESIDAD TIPO I"
+    }
+    paciente = {
+        "nombre": "Nicolás Carvajal",
+        "documento": "1267835678",
+        "prioridad": "BAJA",
+        "fecha_nacimiento": "2000-10-19",
+        "peso": 40,
+        "altura": 130,
+        "tipo_sangre": "B+",
+    }
+    for i in range(n_pacientes):
+        paciente["_id"] = str(uuid.uuid4())
+        paciente = jsonable_encoder(paciente)
+        request.app.database["pacientes"].insert_one(paciente)
+    for i in range(n_prioritarios):
+        paciente_pri["_id"] = str(uuid.uuid4())
+        paciente = jsonable_encoder(paciente_pri)
+        request.app.database["pacientes_prioritarios"].insert_one(paciente)
+    return {"message": f"Se llenó la base de datos con {n_pacientes} pacientes y {n_prioritarios} pacientes prioritarios"}
