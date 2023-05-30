@@ -100,6 +100,13 @@ def delete_pacientes(request: Request):
     request.app.database["pacientes"].delete_many({})
     return {"message": "Pacientes borrados"}
 
+
+@router.delete("/", response_description="Borrar todos los pacientes prioritarios")
+def delete_pacientes(request: Request):
+    request.app.database["pacientes_prioritarios"].delete_many({})
+    return {"message": "Pacientes prioritarios borrados"}
+
+
 # @router.delete("/{id}", response_description="Borrar paciente")
 # def delete_paciente(id: str, request: Request):
 #     delete_result = request.app.database["pacientes"].delete_one({"_id": id})
